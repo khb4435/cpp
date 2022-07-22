@@ -9,7 +9,7 @@
 #include <set>
 
 int main(int argc, const char * argv[]) {
-    std::multiset<int> nums {1,2,3,3,3,4,5}; //중복도 지원
+    std::multiset<int> nums {1,2,3,3,3,4,5}; //multi set은 중복을 지원
     for(const auto& num : nums){
         std::cout<<num<<" ";
     }std::cout<<std::endl; // 1 2 3 3 3 4 5
