@@ -8,8 +8,9 @@
 
 
 
-//소멸자, move constructor/assignment는 noexcpet 예외처리가 일어나지 않는다 무조건 새로운 리소스가 생기지 않기에
-//move가 필요할 때 컴파일러가 noexcpt를 보고 확실하게 move를 call 해줄 수 있음
+//소멸자, move constructor/assignment는 noexcpet 예외처리가 일어나지 않게 해줘야함!!!
+//이동의 에외발생은 매우 무서운것이라서 그렇다.
+//move가 필요할 때 컴파일러가 noexcpt를 보고 확실하게 move를 call 해줄 수 있음, 아니면 그냥 복사생성하게된다.
 #include <iostream>
 class Cat{
 public:
