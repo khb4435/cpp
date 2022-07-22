@@ -10,7 +10,7 @@
 #include <algorithm>
 
 int main(int argc, const char * argv[]) {
-    std::vector<int> nums{0,1,0,1,0,1}; //size 7
+    std::vector<int> nums{0,1,0,1,0,1}; //size 6
     
     auto itr=std::remove(nums.begin(),nums.end(),0);
     //begin부터 end까지 모든 0 엘레멘트 삭제 그리고 마지막 엘레멘트 리턴
