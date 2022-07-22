@@ -16,6 +16,7 @@ int main(int argc, const char * argv[]) {
     
     std::sort(numsA.begin(),numsA.end());
     //std::sort(numsA.begin(),numsA.end(),//람다펑션);
+    
     for(auto& num : numsA){
         std::cout<<num<<" ";
     }std::cout<<std::endl;
