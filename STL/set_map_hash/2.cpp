@@ -19,7 +19,7 @@ struct customFn
 };
 
 int main(int argc, const char * argv[]) {
-    std::set<int,customFn> nums{1,2,3,4,5};
+    std::set<int,customFn> nums{1,2,3,4,5}; //customFn대로 set해준다.
     
     nums.emplace(-1);
     nums.emplace(1); //1
