@@ -6,7 +6,7 @@
 //
 
 
-//map은 set + ((key&value))
+//map은 ((key&value))
 #include <iostream>
 #include <map>
 int main(int argc, const char * argv[]) {
