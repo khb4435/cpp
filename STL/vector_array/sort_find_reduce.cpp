@@ -13,6 +13,7 @@
 int main(int argc, const char * argv[]) {
     //1.sort,stable_sort,partial_sort,nth_element
     std::vector<int> numsA{1,3,6,4,7,8,2,5,129,9};
+    
     std::sort(numsA.begin(),numsA.end());
     //std::sort(numsA.begin(),numsA.end(),//람다펑션);
     for(auto& num : numsA){
