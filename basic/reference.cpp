@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
     const Cat kitty{"kitty"};
     
     const std::string& name = kitty.name();
-    //원랜 반환되며 임시객채 거치는데 레퍼런스 리턴은 임시객체를 거치지 않는다는 걸로 받아들여도 되는건가??
+    //레퍼런스리턴으 레퍼런스 형식을 받아야 하고 주의사항은 함수안으 지역변수를 레퍼런스 리턴하면 안된다는 것
     
     //std::string name = kitty.name();
     return 0;
