@@ -9,7 +9,7 @@
 #include <vector>
 class Cat{
 public:
-    explicit Cat(int age) : mAge{age} {}
+    explicit Cat(int age) : mAge{age} {} //명시적인 생성자 생성방법 explicit
     void speak() const{}
 private:
     int mAge;
