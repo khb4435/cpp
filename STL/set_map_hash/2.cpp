@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <set>
+
+//c++에서 구조체와 클래스의 차이는 접근제어지시자자 클래스는 무조건 public인 것 밖에 없다.
 struct customFn
 {
     bool operator() (const int lhs, const int rhs) const{
