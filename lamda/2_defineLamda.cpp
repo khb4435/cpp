@@ -18,7 +18,7 @@ private:
 
 int main(int argc, const char * argv[]) {
     //lambdaPlus3 정의1
-    auto lambdaPlus3 = [localVar = 3] (int x){
+    auto lambdaPlus3 = [localVar = 3] (int x){ //[]는 {}안에 들어갈 지역변수느낌, ()는 매개변수
         return localVar + x;
     };
     
