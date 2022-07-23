@@ -37,7 +37,7 @@ void f(){
     //unique pointer는 f()가 소멸되면서 cp의 소멸자도 자동으로 호출됨
     //스마트포인터 사용하면 exception에 더 안전한 코드 사용 가능
     std::unique_ptr<Cat> cp = std::make_unique<Cat>(5);
-    std::cout<<divide(10,0)<<std::endl;
+    std::cout<<divide(10,0)<<std::endl;//exception발생
 }
 
 int main(int argc, const char * argv[]) {
