@@ -30,7 +30,7 @@ int divide(int a, int b){
 void f(){
     /*
     Cat *cp = new Cat(5);
-    std::cout<<divide(10,0)<<std::endl;
+    std::cout<<divide(10,0)<<std::endl; //exception발생
     delete cp; //exception이 불려지며 힙공간의 Cat객체를 소멸하지 못함
      */
     
