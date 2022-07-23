@@ -5,6 +5,8 @@
 //  Created by 김현배 on 2022/02/20.
 //
 
+
+//operator()를 해줌으로써 함수형 객체 
 #include <iostream>
 class Plus{
 public:
