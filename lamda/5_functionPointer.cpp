@@ -7,14 +7,14 @@
 
 #include <iostream>
 #include <vector>
-class FunctionObj{
+class FunctionObj{ //operator()가 있으므로 함수형 객체
 public:
     void operator() (int i){
         std::cout<<i<<std::endl;
     }
 };
 
-void freeFunction (int i){
+void freeFunction (int i){ //그냥 함수
     std::cout<<i<<std::endl;
 };
 
