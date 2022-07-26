@@ -6,9 +6,10 @@
 //
 
 
-//템플릿이란 특별한 타입이 정의되어 있지 않고 런타임때 필요한 타입으로 정의된다?
-//Function Templete -> funtion overloadingd이 일어나는 때 가장 필요함
-//아우 귀찮아
+//템플릿이란 특별한 타입이 정의되어 있지 않고 런타임때 필요한 타입으로 정의된다
+//Function Templete -> funtion overloading이 일어나는 때 가장 필요함
+
+//뼈대만 만들어놓고 본 함수는 런타임에 만들어내자
 int add(int a,int b){
     return a+b;
 }
