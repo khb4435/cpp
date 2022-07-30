@@ -1,0 +1,98 @@
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <vector>
+//1.쓰레드 생성자
+void fn(){
+    int a=0;
+    std::cout<<"fn"<<std::endl;
+}
+
+int main(){
+    //std::thread t0; //스택에만 있음.
+    std::thread t1(fn);
+    //std::thread t2(f1); //compile error! -> copy constructor is deleted
+    std::thread t2{std::move(t1)}; //move만 가능
+    t2.join();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+//2.쓰레드 소멸자
+//joinable한 상태이면 std::terminate가 호출된다.
+void fn(){
+    int a=0;
+    std::cout<<"fn"<<std::endl;
+}
+
+int main(){
+    std::thread t1(fn);
+    t1.join(); //가 없으면 terminate호출되며 종료된다.
+    std::cout<<"joinable: "<<t1.joinable()<<std::endl;
+    t2.join();
+}
+
+//3.join
+//main함수내에서 t1.join된거 보이지? 그러면 main함수가 t1이 끝나고 join될 때 까지 기다려 주는거임
+
+//4.detach
+//쓰레드 객체로부터 쓰레드 실행을 분리시킨다 : 분리됬기때문에 main이 끝나도 아무 문제없이 쓰레드가 동작할 수 있는 것
+//그런데 실제 상황에서 detach를 쓰지 않는게 좋다? detach를 통해 끊어지면 다시 커뮤니케이션을 하기가 힘들다.
+void fn(){
+    int a=0;
+    std::cout<<"fn"<<std::endl;
+}
+
+void threadCaller(){
+    std::thread t1;
+    t1.detach();
+}
+int main(){
+    threadCaller();
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+}
+
+//그래서 실제 프로그램에서는 detach를 사용하여 분리하는 것 보다는 global scope같은 곳에 쓰레드객체를 만들고
+//해당 쓰레드가 끝날때까지 기다려주는게 좋다.
+//근데 또 gThread를 영원히 기다려주는 상황이 올 수도 있기 때문에 c++ 20. stop token을 지원하는 jthread를 쓰는게 더 좋다
+std::thread gThread;
+void fn(){
+    std::cout<<"fn"<<std::endl;
+}
+
+void threadCaller(){
+    gThread=std::thread(fn);
+}
+int main(){
+    threadCaller();
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    gThread.join();
+}
+
+
+//5. 그 밖
+void fn(){
+    std::cout<<std::this_thread::get_id()<<std::endl; //thread의 id출력 가능
+}
+
+int main(){
+    std::cout<<"#threads"<<std::thread::hardware_concurrency()::std::endl;
+    //내가 가진 하드웨어의 쓰레드 갯수 측정가능
+}
+
+//6.벡터 쓰레드 가능
+void fn(){
+    std::cout<<std::this_thread::get_id()<<std::endl; //thread의 id출력 가능
+}
+
+int main(){
+    std::vector<std::thread>threads;
+    for(int i=0;i<10;i++){
+        threads.emplace_back(std::thread(fn));
+    }
+
+    for(auto &thread : threads){
+        thread.join();
+    }
+}
