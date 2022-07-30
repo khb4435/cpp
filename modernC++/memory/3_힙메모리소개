@@ -1,0 +1,15 @@
+#include <iostream>
+
+int main(){
+    int *ip;
+    ip=new int;
+    *ip=100;
+    delete ip; //heap 메모리 삭제됨
+
+    //프로그램이 끝나면서 ip변수도 사라짐
+    //(스택메모리니까)
+
+    //힙 메모리 사용이유
+    //1.라지 사이즈
+    //2.동적으로 메모리 할당
+}
