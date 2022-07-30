@@ -1,0 +1,22 @@
+#include <iostream>
+#include <thread>
+
+int num=0;
+
+void plus10000(){
+    for(int i=0;i<10000;i++){
+        num++;
+    }
+}
+
+int main(){
+    std::thread t1(plus10000);
+    std::thread t2(plus10000);
+
+    t1.join();
+    t2.join();
+    //두개가 전역변수 num에 동시 접근하므로 20000이 나오지 않고 막 16238같은 수가 나온다. 
+    //어쩔 땐 20000도 나오지만
+    //이런 동시접근하는거 확인하는 방법
+    //g++ main.cpp -fsanitize=thread -g
+}
