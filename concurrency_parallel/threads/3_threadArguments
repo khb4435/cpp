@@ -1,0 +1,117 @@
+#include <iostream>
+#include <thread>
+#include <string>
+
+//1.쓰레드 아규먼트
+
+//copy말고 ref로 아규먼트 던질때
+//void fn(int a,std::string s){
+void fn(int a,std::string &s){    
+    std::cout<<a<<" "<<s<<std::endl;
+}
+
+int main(){
+    int num=42;
+    std::string str="hyeonbae";
+    //std::thread t1(fn,num,str);
+    std::thread t1(fn,num,std::ref(str));
+    t1.join();
+}
+
+
+//2.
+//아무 문제 없지만
+void fn(int &a){    
+    std::cout<<a<<std::endl; //42출력
+}
+
+void caller(){
+    int num=42;
+    fn(num);
+}
+int main(){
+    caller();
+}
+
+
+//문제 생김
+void fn(int &a){    
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout<<a<<std::endl; //32764 출력
+}
+
+void threadCaller(std::thread &t){
+    int num=42; //는 pop이 되고 없어짐
+    t = std::thread(fn,std::ref(num)) 
+}
+
+int main(){
+    std::thread t1;
+    threadCaller(t1);
+    t1.join();
+}
+
+//이러한 문제때문에 쓰레드는 같은 스코프내에서 join해주는것이 안전하다.
+void fn(int &a){    
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout<<a<<std::endl; //32764 출력
+}
+
+void threadCaller(std::thread &t){
+    int num=42; //는 pop이 되고 없어짐
+    t = std::thread(fn,std::ref(num)) 
+    t.join(); //추가된 부분
+}
+
+int main(){
+    std::thread t1;
+    threadCaller(t1);
+    t1.join();
+}
+
+
+//3.함수에서 리턴된 벨류 핸들링
+//결론부터 말하면 리턴된 벨류를 받을 방법은 없다.std::async를 사용하거나 ref를 argument로 사용하는 방법이 있다.
+//&ret을 더 안전하게 받으려면 나중에 사용할 future와 promise를 사용하면 된다.
+int fn(int &ret){
+    ret=3;
+    return ret;
+}
+
+int main(){
+    int num=0;
+    std::thread t1(fn,num);
+    t1.join();
+    std::cout<<"retVal"<<num<<std::endl; //3출력
+}
+
+//이 벨류를 다른 쓰레드에서 사용하더라도 쉽게 받을 수 있는 트릭이 있다. 람다!
+int fn(){
+    return 3;
+}
+
+int main(){
+    int num=0;
+    std::thread t1([&num](){ //직관적이다.
+        num=fn();
+    })
+    t1.join();
+    std::cout<<"retVal"<<num<<std::endl; //3출력
+}
+
+
+//4.thread exception
+//다른 쓰레드에서 던지는 exception을 main쓰레드에서 잡는 법은 없다.
+int fn(){
+    throw std::runtime_error("error");
+}
+
+int main(){
+    try{
+        std::thread t1(fn);
+        t1.join();
+    }
+    catch(...){
+        std::cout<<"catched"<<std::endl;
+    }
+}
