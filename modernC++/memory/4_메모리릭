@@ -1,0 +1,12 @@
+#include <iostream>
+
+int main(){
+    int *ip=new int[250];
+    return 0;
+
+    //g++ main.cpp
+    //valgrind ./a.out
+
+    //g++ -g main.cpp
+    //valgrind --leak-check=full ./a.out
+}
