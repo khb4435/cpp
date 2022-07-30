@@ -1,0 +1,34 @@
+#include <iostream>
+
+struct ST{
+    long a; //8
+    int b; //4
+    short c; //2
+    //16bytes라고 예상
+}
+int main(){
+    std::cout<<sizeof(ST)<<std::endl; //24bytes
+    //패딩이 들어갔기 때문임
+}
+
+
+//2
+class Cat{
+    public:
+        void printCat();
+    private:
+        int age; //4
+        float weight; //4
+        //8bytes를 예상
+}
+
+int main(){
+    std::cout<<sizeof(Cat)<<std::endl;
+    //8bytes 즉 멤버함수는 사이즈와 상관없다.
+
+    Cat cat;
+    Cat* catPtr = &cat;
+    std::cout<<sizeof(catPtr)<<std::endl;
+    //8bytes in 64bits
+    //포인터는 항상 같은 크기를 갖는다. 
+}
