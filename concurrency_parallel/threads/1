@@ -1,0 +1,20 @@
+#include <iostream>
+#include <thread>
+
+void fn(){
+    int a=0;
+    std::cout<<"fn"<<std::endl;
+}
+
+int main(){
+    std::cout<<"process start!"<<std::endl;
+    std::thread t1(fn); //쓰레드 객체 생성
+    std::thread t2(fn);
+    std::thread t3([]{ //람다함수도 쓰레드로 들어갈 수 있음
+        int a=0;
+        std::cout<<"lamda thread"<<std::endl;
+    });
+
+    t1.join();
+    t2.join();
+}
