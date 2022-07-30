@@ -1,0 +1,29 @@
+#include <iostream>
+
+//int가 4바이트가 아닐 수도 있음. 
+//검증1 : assert로 박고 코딩
+int main(){
+    static_assert(sizeof(int==4),"int is 4 bytes!");
+}
+
+//2
+#include <cstdint>
+int main(){
+    std::cout<<sizeof(int8_t)<<std::endl; //1
+    std::cout<<sizeof(int64_t)<<std::endl; //8
+}
+
+//3
+int main(){
+    int a;
+    uint32_t b;
+    int8_t d;
+}
+
+//4
+#include <array>
+int main(){
+    std::array<int,5>ia;
+    std::cout<<sizeof(ia)<<std::endl;
+}
+
