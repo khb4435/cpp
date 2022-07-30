@@ -1,0 +1,47 @@
+#include <iostream>
+#include <thread>
+
+//g++10 jthread.cpp -pthread -std=c++20
+//jthread(joining)
+void fn(){
+    std::cout<<"fn"<<std::endl;
+}
+
+int main(){
+    std::jthread t1(fn); //내부적으로 destructor호출하면서 join호출
+    //t1.join() or t1.detach()없이도 ok
+}
+
+//2.stop_token지원
+//끝도없다. 계속 기다린다 안끝남
+void fn(){
+    for(int i=0; ;i++){ //무한대
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(1s);
+        std::cout<<i<<std::endl;
+    }
+}
+int main(){
+    std::thread t1(fn);
+    t1.join();
+}
+
+//stop token
+void fn(std::stop_token stoken){
+    for(int i=0; ;i++){ //무한대
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(1s);
+        std::cout<<i<<std::endl;
+        if(stoken.stop_requested()){ //바로 종료됨, jthead의 desctructor에서 join함수를 부르기 전에 stop을 request하기 때문이다.
+            std::cout<<"stop requested"<<std::endl;
+            return;
+        }
+    }
+}
+int main(){
+    std::jthread t1(fn);
+    //t1.request_stop();
+    //t1.join();
+}
+
+//jthread -> stop request 후 join하는 방식으로 동작된다.
