@@ -1,0 +1,67 @@
+//1.const & mutable
+#include <iostream>
+#include <string>
+class Cat{
+public:
+    Cat(std::string name):mName{std::move(name)}{}
+    void speak() const{ //함수내 수정을 금지함
+        mName="nabi"; //mutable변수는 const함수내에서 바뀔 수 있음
+        std::cout<<mName<<std::endl;
+    }
+private:
+    mutable std::string mName;
+};
+
+int main(int argc, const char * argv[]) {
+    const Cat kitty{"kitty"};
+    kitty.speak(); //const는 const함수만 부른다.
+    return 0;
+}
+
+//2.explicit
+#include <iostream>
+class Cat{
+public:
+    explicit Cat(int age):mAge{age}{} //무조건 생성자를 이 형식으로 만든다는 것임
+    void speak() const{
+        std::cout<<mAge<<std::endl;
+    }
+private:
+    int mAge;
+};
+
+int main(int argc, const char * argv[]) {
+    //Cat kitty; //오류
+    //const Cat kitty=3; //오류
+    const Cat kitty(3); //explicit하게 이거만 성공
+    return 0;
+}
+
+//3
+#include <iostream>
+class Cat{
+public:
+    void setAge(int age){
+        mAge{age};
+    }
+    int getAge() const {
+        return mAge;
+    }
+    void setName(std::string name){
+        mName{std::move(name)};
+    }
+    //std::string보다 이게 더 효율적임 일단 mName이 없어지는게 아니라
+    //레퍼런스로 반환해주면 복사과정이 없어져서 훨씬 더 효율적임
+    const std::string& getName() {
+        return mName;
+    }
+private:
+    int mAge;
+    std::string mName;
+};
+
+int main(){
+    const Cat kitty;
+    std::string name = kitty.getName(); //deep copy 레퍼런스로 반환해도 값으로 받으면 복사가 일어나고
+    const std::string& name2 = kitty.getName(); //no deep copy 레퍼런스 반환을 레퍼런스로 받으면 0 카피임
+}
