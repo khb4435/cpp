@@ -1,0 +1,27 @@
+//static library는 object파일들을 모아논 하나의 파일에 불과하다.
+//cat.h
+#pragma once
+class Cat{
+    public:
+        void speak();
+}
+
+//cat.cpp
+#include <iostream>
+#include "cat.h"
+void Cat::speak(){
+    std::cout<<"meow"<<std::endl;
+}
+
+//main.cpp
+#include "cat.h"
+int main(){
+    Cat kitty;
+    kitty.speak();
+}
+
+//g++ cat.cpp -c -02 -Wall -Werror
+//ar -rs libcat.a cat.o
+//g++ main.cpp -lcat (cat 라이브러리와 링킹해라)
+//g++ main.cpp -L.(현재위치에 라이브러리있다) -lcat
+//./a.out
