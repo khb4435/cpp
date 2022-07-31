@@ -1,0 +1,71 @@
+#include <iostream>
+struct complexNum{
+    double real;
+    double imag;
+
+    complexNum(double r,double i):real{r},imag{i}{};
+    void print() const{
+        std::cout<<real<<" "<<imag<<"i"<<std::endl;
+    }
+};
+
+int main(){
+    complexNum c1{1,1}; //1+i
+    complexNum c2{1,2}; //1+2i
+
+    complexNum c3{c1+c2};//가 되게하기 위해서
+}
+
+//operator+ 정의
+complexNum operator+ (const complexNum& lhs, const complexNum& rhs){
+    complexNum c{lhs.real+rhs.real, lhs.imag+rhs.imag};
+    return c;
+}
+
+
+///////////////////////////////////////////////////////
+#include <iostream>
+#include <string>
+class Cat{
+    public:
+        Cat(std::string name,int age):mName{std::move(name)},mAge{age}{};
+        const std::string& getName() const{
+            return mName;
+        }//mName은 사라지는 변수가 아니므로 레퍼런스 리턴이 가능
+        int getAge() const{
+            return mAge;
+        }
+    private:
+        std::string mName;
+        int mAge;
+}
+
+bool operator==(const Cat& lhs, const Cat& rhs){
+    return lhs.getName() == rhs.getName() && lhs.getAge() == rhs.getAge()
+}
+
+bool operator<(const Cat& lhs, const Cat& rhs){
+    if(lhs.getAge() > rhs.getAge()){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+std::ostream& operator<<(std::ostream& os,const Cat& c){
+    return os<<c.getAge()<<" "<<c.getName();
+}
+int main(){
+    Cat kitty{"kitty",1};
+    Cat nabi{"nabi",2};
+
+    kitty == nabi;
+    kitty > nabi;
+    
+    std::vector<Cat> cats;
+    std::sort(cats.begin(),cats.end()); 
+    //정렬의 기준은 operator<가 된다.
+
+    std::cout<<kitty<<std::endl;
+}
