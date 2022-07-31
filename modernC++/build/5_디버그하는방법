@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+int add(std::vector<int>& vIn){
+    for(auto &el : vIn){
+        ++el;
+    }
+    return 0;
+}
+
+int sub(std::vector<int>& vIn){
+    for(auto &el : vIn){
+        --el;
+    }
+    return 1;
+}
+
+int main(){
+    std::vector<int> v{1,2,3,4,5};
+    int a=10;
+    if(a%2 == 10){
+        a=add(v);
+    }
+    else{
+        a=sub(v);
+    }
+    std::cout<<a<<std::endl;
+}
+
+//g++ main.cpp -g : 디버그모드 컴파일
+//gdb a.out
+//start : 코드를 한줄씩 실행시킬 수 있음
+//next : 다음줄로 이동
+//매번 한줄씩 넘어가기 힘들다 : ctrl X A
+//이때도 n을 누르며 한줄한줄 실행 가능
+//브레이크 포인트 : break 26 : 26째줄에 break point 건다
+//break sub : sub함수에 break point 건다.
+//continue : break point에서 멈춘다.
+//step : 함수 안으로 들어간다.
+//print vIn 
+// (ctrl X 2) : 어셈블리 코드
+// 여기서 또 ctrl X 2 : 레지스터 
+// n 누르면서 이동
+//tui reg float : float을 처리하는 레지스터 볼 수 있음
+
+//예를들어 n 계속 하다가 add함수안에 들어왔을 때 step 쳐주면 add함수 안에 들어가는데
+//가금 엄청 복잡한 함수를 타다보면 뭐하다 add 들어왔는지 잊는다.
+//콜스택을 본다고 한다고 말함 : bt (back track)
+
+
+
+//비쥬얼 스튜디오 코드에서 디버깅하는방법
+//브레이크포인트 찍고
+//debug->start debugging 클릭
