@@ -1,0 +1,188 @@
+//<변수>
+//main.cpp
+#include <iostream>
+int a=0;
+int main(){
+    std::cout<<a<<std::endl;
+}
+
+//foo.cpp
+int a=100;
+
+//g++ main.cpp foo.cpp -> error 
+//multiple definition of a
+//컴파일은 됬지만 링크가 안되는 상황
+
+
+//해결1 extern
+//main.cpp
+#include <iostream>
+extern int a;
+int main(){
+    std::cout<<a<<std::endl; //100
+}
+
+//foo.cpp
+int a=100;
+
+
+
+//2.static
+//main.cpp
+#include <iostream>
+int a = 0;
+int main(){
+    std::cout<<a<<std::endl; //0
+}
+
+//foo.cpp
+static int a=100;
+
+
+///////////////////////////////////////
+//3.<함수>
+//전방선언함수는 extern이 생략된 것이나 다름없다
+//main.cpp
+void foo();
+int main(){
+    foo();
+    return 0;
+}
+
+//foo.cpp
+void foo(){
+    std::cout<<"foo"<<std::endl;
+}
+
+
+//4.static 함수
+//main.cpp
+void foo();
+int main(){
+    foo();
+    //bar(); //에러
+    return 0;
+}
+
+//foo.cpp
+extern void bar(){
+    std::cout<<"bar"<<std::endl;
+}
+void foo(){
+    std::cout<<"foo"<<std::endl;
+    bar(); //가능
+}
+
+
+
+//5.클래스내 static
+//cat.h
+class Cat{
+    public:
+        void speak();
+    private:
+        //void bye();
+        int age=10;
+}
+
+//cat.cpp
+#include "cat.h"
+#include <iostream>
+//void Cat::bye(){ //어 지금 bye라는 멤버평선이 어떤 멤버변수에도 접근안하네
+//object와 직접적으로 관련이 없으면 static으로 free function만들어주는게 좋음
+static void bye(){ //cat.o 에서만 접근가능한 함수가됨
+    std::cout<<"bye"<<std::endl;
+}
+void Cat::speak(){
+    std::cout<<"meow"<<std::endl;
+    std::cout<<"im"<<age<<std::endl;
+    bye();
+}
+
+
+
+///////6.extern "C" : name mangling 없애주는 키워드
+//main.cpp
+int foo(double a);
+double bar(int a);
+
+int main(){
+    int a=0;
+    double b = bar(a);
+    int c = foo(b);
+    return 0;
+}
+
+//foo.cpp
+int foo(double a){
+    return static_cast<int>(a);
+}
+double bar(int a){
+    return static_cast<double>(a);
+}
+
+//g++ foo.cpp -c 
+//nm foo.o ->_Z3bari
+//         ->_Z3food
+
+//이렇게 c++은 같은 함수이름(다른 파라미터)같은걸 function overloading 해주기위해 "name mangling"을 한다.
+//이렇게 name mangling이 되서 다른 함수로 인식되는 것임
+
+//pure c에서는 function overloading기능 없음
+//c 인터페이스를 가진 바이너리를 제공해주기 위해서는 name mangling을 전부 없애줘야함
+//main.cpp
+int foo(double a);
+double bar(int a);
+
+int main(){
+    int a=0;
+    double b = bar(a);
+    int c = foo(b);
+    return 0;
+}
+
+//foo.cpp
+extern "C" int foo(double a){
+    return static_cast<int>(a);
+}
+extern "C" double bar(int a){
+    return static_cast<double>(a);
+}
+
+//g++ foo.cpp -c
+//nm foo.o -> foo
+//         -> bar
+//이렇게 name mangling이 되지 않았음
+
+
+//7. 
+//main.cpp
+int foo(double a);
+double bar(int a);
+
+int main(){
+    int a=0;
+    double b = bar(a);
+    int c = foo(b);
+    return 0;
+}
+
+//foo.cpp
+#include "foo.h"
+int foo(double a){
+    return static_cast<int>(a);
+}
+double bar(int a){
+    return static_cast<double>(a);
+}
+
+//foo.h
+#pragma once
+extern "C" int foo(double a);
+extern "C" double bar(int a);
+
+#pragma once
+extern "C" {
+    int foo(double a);
+    double bar(int a);
+}
