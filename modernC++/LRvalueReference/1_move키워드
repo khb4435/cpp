@@ -13,7 +13,7 @@ int main(){
 
 
 ////2
-void storeByLRef(const std::string &s){
+void storeByLRef((const) std::string &s){
     std::string b=std::move(s);
     std::cout<<b<<std::endl; //abc
     //const , std::move -> copy
