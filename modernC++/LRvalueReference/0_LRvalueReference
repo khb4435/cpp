@@ -22,6 +22,7 @@ void storeByLRef(std::string &s){
 }
 void storeByRRef(std::string &&s){
     //std::string b=s; //wrong!
+    //비효율적인 1 copy
     
     std::string b=std::move(s);
     //rvalue로 받았는데 s는 함수내에서 또 lvalue로 쓰일 수 있으므로
