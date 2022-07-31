@@ -30,12 +30,12 @@ int main(int argc, const char * argv[]) {
 class Cat{
 public:
     void speak(){
+        static int count; //static 멤버변수
         count++;
         std::cout<<count<<" "<<"meow"<<std::endl;
     }
 private:
     int mAge;
-    static int count; //static 멤버변수
 };
 
 int Cat::count =0;//초기화는 여기서
