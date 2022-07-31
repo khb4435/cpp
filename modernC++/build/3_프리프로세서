@@ -1,0 +1,84 @@
+#include <iostream>
+#include <algorithm>
+#include <limits>
+//#define ABCD 2
+constexpr int ABCD 2
+
+int main(){
+    //modern c++ style
+    std::cout << std::numeric_limits<uint16_t>::max()<<std::endl;
+    std::cout << std::max(10,100)<<std::endl;
+
+    //g++ main.cpp -o preprocessor -Wall -Werror -std=c++17
+    if constexpr(ABCD){
+        std::cout<<"yes"<<std::endl;
+    }
+    else{
+        std::cout<<"no"<<std::endl;
+    }
+
+    //predefined macro
+    std::cout<<__FILE__<<std::endl;
+    std::cout<<__LINE__<<std::endl;
+    std::cout<<__DATE__<<std::endl; //컴파일했을 때의 날짜
+    std::cout<<__TIME__<<std::endl; //컴파일했을 때의 시간
+}
+
+
+
+//2.중복헤더문제
+//g++ main.cpp -c -> error
+//main.cpp
+#include "Cat.h"
+#include "Cat.h"
+int main(){
+    Cat kitty;
+    kitty.speak();
+    return 0;
+}
+
+//Cat.h
+class Cat{
+    public:
+        void speak();
+};
+
+
+//3.중복헤더문제 해결
+//main.cpp
+#include "Cat.h"
+#include "Cat.h"
+int main(){
+    Cat kitty;
+    kitty.speak();
+    return 0;
+}
+
+//Cat.h
+//추가되는 부분
+#ifndef CAT_H
+#define CAT_H
+class Cat{
+    public:
+        void speak();
+};
+#endif
+
+
+//4.pragma once로 해결
+//main.cpp
+#include "Cat.h"
+#include "Cat.h"
+int main(){
+    Cat kitty;
+    kitty.speak();
+    return 0;
+}
+
+//Cat.h
+//추가되는 부분
+#pragma once
+class Cat{
+    public:
+        void speak();
+};
