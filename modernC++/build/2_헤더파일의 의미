@@ -1,0 +1,97 @@
+#include <iostream>
+//main.cpp
+void foo(); //헤더파일 쓰는 이유
+//이게 전방선언되지 않으면 컴파일이 안됨
+
+int main(){
+    foo();
+    return 0;
+}
+
+void foo(){
+    std::cout<<"foo"<<std::endl;
+}
+
+//2./////////////////////////////
+//main.cpp -> 컴파일에러 foo가 도대체 뭔지 알 수 없음
+//g++ main.cpp -o foo -Wall -Werror
+void foo();
+int main(){
+    foo();
+    return 0;
+}
+
+//foo.cpp
+void foo(){
+    std::cout<<"foo"<<std::endl;
+}
+
+//g++ main.cpp -c(object파일생성) -Wall -Werror (사람이 읽을 수 없음)
+//g++ main.cpp -S(object파일생성) -Wall -Werror (사람이 읽을 수 있는 어셈블리파일)
+
+//g++ foo.cpp -c 
+//이제 main.o와 foo.o을 링킹
+//g++ main.o foo.o -o foo
+
+
+
+//3.foo.cpp에서 선언부와 정의부를 따로 해도 컴파일하는데 문제가 없음.
+//g++ main.cpp foo.cpp -o foo -Wall -Werror
+//->main.cpp와 foo.cpp에서 foo의 선언부가 중복된다.
+//main.cpp
+void foo();
+int main(){
+    foo();
+    return 0;
+}
+
+//foo.cpp
+void foo();
+void foo(){
+    std::cout<<"foo"<<std::endl;
+}
+
+
+
+//4.헤더파일생성
+//g++ main.cpp foo.cpp -o foo -Wall -Werror
+//main.cpp
+#include "foo.h"
+int main(){
+    foo();
+    return 0;
+}
+
+//foo.cpp
+#include <iostream>
+#include "foo.h"
+void foo(){
+    std::cout<<"foo"<<std::endl;
+}
+
+//foo.h
+void foo();
+
+
+//5.클래스도 동일
+//g++ main.cpp cat.cpp -o cat -Wall -Werror
+//main.cpp
+#include "Cat.h"
+int main(){
+    Cat kitty;
+    kitty.speak();
+    return 0;
+}
+
+//cat.cpp
+#include <iostream>
+#include "Cat.h"
+void Cat::speak(){
+    std::cout<<"meow"<<std::endl;
+}
+
+//cat.h
+class Cat{
+    public:
+        void speak();
+};
