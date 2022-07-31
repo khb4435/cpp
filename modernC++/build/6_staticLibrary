@@ -21,7 +21,9 @@ int main(){
 }
 
 //g++ cat.cpp -c -02 -Wall -Werror
-//ar -rs libcat.a cat.o
-//g++ main.cpp -lcat (cat 라이브러리와 링킹해라)
+//ar -rs libcat.a cat.o //archive파일만든다. -rs : 인덱스파일과 오브젝트파일들의 내용을 하나의 아카이브에 넣는다.
+//-l(라이브러리와 링킹하는 옵션), -L(라이브러리를 찾기위한 위치 지정)
+//g++ main.cpp -lcat (cat 라이브러리와 링킹(l)해라)
+//보통 스태틱라이브러리는 /usr/bin/ld에 있어서
 //g++ main.cpp -L.(현재위치에 라이브러리있다) -lcat
 //./a.out
