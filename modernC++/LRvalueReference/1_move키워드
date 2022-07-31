@@ -45,6 +45,7 @@ int main(){
 
     kitty.setName(s); //0 copy에서 const , std::move를 통해 
     //정말 필요한 1 copy를 만들어줌 (s에도 값이 있음)
+    kitty.setName("nocope"); //1copy //틀림
 }
 
 
