@@ -26,9 +26,11 @@ int main(int argc, const char * argv[]) {
     delete [] cats;
     
     //스마트 포인터
-    std::unique_ptr<Cat> catPtr1//catPtr1 in stack which pointing Cat type in heap
-    = std::make_unique<Cat>(3);
-    //이건 delete를 자동적으로 해준다
+    {//스코프 라이프 사이클을 갖는다.
+        std::unique_ptr<Cat> catPtr1//catPtr1 in stack which pointing Cat type in heap
+        = std::make_unique<Cat>(3);
+        //이건 delete를 자동적으로 해준다
+    }
     
     //""배열을"" 스마트 포인팅 즉 자동 소멸기능 있게 하는방법? 벡터
     std::vector<Cat> catss(5); //5개
