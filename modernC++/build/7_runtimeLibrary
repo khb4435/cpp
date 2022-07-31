@@ -1,0 +1,68 @@
+//fplc로 라이브러리 만들고
+//런타임이나, 로드타임에 main.cpp와 합체시킨다
+//실행파일만들때는 .so의 심볼정보만 들어갔다가 런타임이나, 로드타임에 .so와 합쳐진다.
+
+//1.로드타임 (프로세스가 실행될 때)
+//foo.cpp
+#include <iostream>
+void foo(){
+    std::cout<<"foo"<<std::endl;
+}
+
+//main.cpp
+void foo();
+
+int main(){
+    foo();
+    return 0;
+}
+
+//g++ foo.cpp -fPLC(여러 앱에서 다 돌아가게 주소값을 relative하게함) -c -> foo.o
+//g++ -shared foo.o -o libfoo.so ->libfoo.so
+//g++ main.cpp -c -> main.o
+//g++ main.o -L. -lfoo ((-Wl,-rpath=.))
+//LD_LIBRARY_PATH로 해결 할 수도 있음
+
+
+//2. 런타임 (프로세스가 실행되는 중간에)
+//foo.cpp
+#include <iostream>
+void foo(){
+    std::cout<<"foo"<<std::endl;
+}
+
+//main.cpp
+#include <dlfcn.h>
+#include <iostream>
+int main(){
+    void *handle = dlopen("./libfoo.so",RTLD_LAZY);
+    //RTLD_LAZY : flag, lazy하게 바인딩해준다.
+    if(!handle){
+        std::cout<<"no library"<<std::endl;
+        return 1;
+    }
+
+    void(*fooptr)();
+    //fooptr = (void(*)())dlsym(handle,"foo");
+    fooptr = (void(*)())dlsym(handle,"_Z3foov");
+    //c++로 컴파일했기 때문에 name mangling이 된다. 이걸 찾기 위해 nm foo.o
+    //
+    const char* dlsym_error = dlerror();
+    if(dlsym_error){
+        std::cout<<"no symbol"<<std::endl;
+        return 1;
+    }
+
+    (*fooptr)();
+    dlclose(handle);
+    return 0;
+}
+
+//g++ main.cpp -ldl
+//실행시간에 foo를 가져다 쓰기 때문에 foo의 전방선언이 필요없었음
+//global offset table
+//processure linkage table
+
+//static library 추천
+//그럼에도 dll이 필요한 경우는 실행파일을 이미 가지고 있고 실행파일을 업데이트하기위해 dll만 업데이트가 필요할 때
+//실행파일 rebuild과정이 필요없다.
