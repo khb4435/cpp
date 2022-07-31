@@ -1,0 +1,69 @@
+#include <iostream>
+class Cat{
+    public:
+        void speak();
+    private:
+        double d8;
+        int i4a;
+        int i4b;
+}
+
+Cat staticCat; //static 영역의 오브젝트
+
+int main(){
+    sizeof(Cat); //16
+}
+
+
+//2
+#include <iostream>
+class Cat{
+    public:
+        void speak();
+    private:
+        int i4a;
+        double d8;
+        int i4b;
+}
+
+Cat staticCat; //static 영역의 오브젝트
+
+int main(){
+    sizeof(Cat); //24 메모리 패딩
+}
+
+
+
+//3
+#include <iostream>
+class Cat{
+    public:
+        void speak();
+    private:
+        int i4a;
+        double d8;
+        int i4b;
+}
+int main(){
+    sizeof(Cat); //24
+    Cat cats[100]; //24 48 72 96...
+    //데이터구조로 casheline이라는게 있어서 64byte로 짜르는데 
+    //false sharing이 일어날 수 있으니
+}
+
+
+//해결
+#include <iostream>
+class alignas(32) Cat{
+    public:
+        void speak();
+    private:
+        int i4a;
+        double d8;
+        int i4b;
+}
+int main(){
+    sizeof(Cat); //32
+    Cat cats[100]; //32 64 96 128...
+    //casheline과 맞춰졌음.
+}
