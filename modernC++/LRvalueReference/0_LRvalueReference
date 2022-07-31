@@ -1,3 +1,4 @@
+//중요한거 오너십!!
 //l value reference(&) vs R value reference(&&)
 //l value를 r value로 만들어주는 std::move
 
