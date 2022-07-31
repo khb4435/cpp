@@ -1,0 +1,70 @@
+#include <iostream>
+
+//return state,error code
+//prefer enum class
+
+//1.nodiscard : 리턴벨류가 사용되지 않으면 에러 출력
+[[nodiscard("retunn value is important!!")]] //<---오류 출력하라!!!
+int fn(){
+    //계산
+    return 0;
+}
+
+int main(){
+    fn(); //어 리턴벨류 받아야 되는데??
+    //막상 g++ main.cpp 해봐도 별 오류가 안뜸
+}
+
+//2.바로 지울 순 없고 사용하지 말라는 속성
+[[deprecated]]
+int fn(){
+    //계산
+    return 0;
+}
+
+int main(){
+    const int ret = fn();
+    //fn 오류뜸 사용하지 말라고
+}
+
+
+//3.switch-case에 사용하는 속성
+//break문이 꼭 들어가야함. 없으면 에러뜬다.
+//근데 의도적으로 break문을 안 넣었을 때 에러가 나오면 안된다
+int main(){
+    int n=1;
+    switch (n)
+    {
+    case 1:
+        std::cout<<"1"<<std::endl;
+        [[fallthrough]]
+    case 2:
+        std::cout<<"2"<<std::endl;
+        break;
+    default:
+        std::cout<<"default"<<std::endl;
+        break;
+    }
+}
+
+
+
+//4.debug목적의 변수만들 때
+//debug모드일때 사용하지만 release모드에서 사용안할때
+int main(){
+    int n=1;
+    switch (n)
+    {
+    case 1:
+        std::cout<<"1"<<std::endl;
+        [[fallthrough]]
+    case 2:
+        std::cout<<"2"<<std::endl;
+        break;
+    default:
+        std::cout<<"default"<<std::endl;
+        break;
+    }
+
+    [[maybe_unused]]int nDebug;
+}
