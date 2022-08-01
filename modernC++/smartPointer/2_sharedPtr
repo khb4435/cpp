@@ -1,0 +1,90 @@
+//shared pointer는 많은 스마트 포인터들에 둘려쌓여질 수 있음
+//shared pointer는 count라는 게 있는데 포인팅당하는 갯수를 알려줌
+//count가 0일 때 소멸자가 호출된다
+#include <iostream>
+class Cat{
+public:
+    Cat() : mAge{0}{}
+    ~Cat(){}
+private:
+    int mAge;
+};
+
+int main(int argc, const char * argv[]) {
+    std::shared_ptr<Cat> catPtr = std::make_shared<Cat>();
+    std::cout<<"count: "<<catPtr.use_count()<<std::endl; //1
+    
+    std::shared_ptr<Cat> catPtr1 = catPtr;
+    std::cout<<"count: "<<catPtr.use_count()<<std::endl; //2
+
+    //객체1개, 포인터2개 , 포인터2개가 없어지면서 count가 0이되고 객체의 소멸자 호출된다.
+    return 0;
+}
+
+
+//shared ptr에서 메모리 릭이 발생하는 경우 : 객체 원형 사이클 포인터
+//메인 함수가 종료되는데(mPtr해제) count가 남아있어서
+//->멤버변수로 weakPtr로 해결
+#include <iostream>
+#include <memory>
+class Cat{
+public:
+    Cat():mAge{0} {}
+    ~Cat(){}
+    std::shared_ptr<Cat> mVar;
+};
+
+int main(int argc, const char * argv[]) {
+    std::shared_ptr<Cat> mPtr = std::make_shared<Cat>();
+    mPtr->mVar = mPtr;
+    std::cout<<"count: "<<mPtr.use_count()<<std::endl; //2
+    
+    //메인 함수가 종료되는데(mPtr해제) count가 1로 남아있어서 객체 소멸x 
+    return 0;
+}
+
+//sharedpointer 메모리릭 두번째 :객체 원형 사이클 포인터
+//멤버변수 weakPtr로 해결
+class Cat{
+public:
+    Cat():mAge{0} {}
+    ~Cat(){}
+    std::shared_ptr<Cat> mFriend;
+};
+
+int main(){
+    std::shared_ptr<Cat> pKitty = std::make_shared<Cat>();
+    std::shared_ptr<Cat> pNabi = std::make_shared<Cat>();
+
+    pKitty->mFriend = pNabi;
+    pNabi->mFriend = pKitty;
+    //count가 남아있어서 객체 소멸안됌
+}
+
+
+//shared_ptr이 멤버변수로 있을 때
+#include <iostream>
+#include <memory>
+class Cat{
+public:
+    explicit Cat(int n) : mVar{std::make_shared<int>(n)} {}
+    ~Cat() noexcept {}
+    
+    Cat clone() const{
+        Cat tmp{*mVar};
+        return tmp;
+    }
+private:
+    std::shared_ptr<int> mVar;
+};
+
+int main(int argc, const char * argv[]) {
+    Cat kitty{2};
+    Cat nabi{kitty}; //copy constructor
+    //멤버변수가 unique_ptr이였음 절대 안됬음.
+    //같은 int를 kitty.mVar과 nabi.mVar이 포인팅함!!
+    
+    //근데 다른 int를 포인팅하게 하고 싶다면?
+    Cat nabi2{kitty.clone()};
+    return 0;
+}
