@@ -1,0 +1,84 @@
+//기본적으로 객체는 많은 포인터들에 의해 포인팅될 수 있다.
+//하지만 unique_ptr은 객채에 대한 유일한 소유권을 갖는다
+//즉 이걸 사용하면 이거만 그 객체에 포인팅한다는 말이다.
+//기본적으로 멤버변수로 포인터써야할 때 가장 많이 사용한다!!!
+#include <iostream>
+#include <memory>
+class Cat{
+public:
+    Cat():mAge{0}{}
+    ~Cat(){}
+private:
+    int mAge;
+};
+
+int main(int argc, const char * argv[]) {
+    std::unique_ptr<Cat> catPtr = std::make_unique<Cat>();
+    //std::unique_ptr<Cat> catPtr1 = std::make_unique<Cat>(); //불가
+    std::unique_ptr<Cat> catPtr2 = std::move(catPtr); //소유권 이전은 가능
+    //왜냐면 Cat객체는 한개의 포인터만 있어야함
+    return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//유니크 포인터는 주로 멤버변수가 포인터일때 사용된다
+#include <iostream>
+#include <memory>
+class Cat : public Animal {
+public:
+    Cat():mAge{0}{}
+    ~Cat(){}
+private:
+    int mAge;
+};
+class Dog : public Animal {} ;
+class Zoo : public Animal {
+public:
+    //prefer enum class
+    Zoo(int n){
+        if(n==1){
+            mAnimal = std::make_unique<Cat>(); //upcast ok
+        }
+        else{
+            mAnimal = std::make_unique<Dog>(); //upcast ok
+        }
+    }
+private:
+    std::unique_ptr<Animal*> mAnimal;
+    //그냥 포인터였으면
+    //rule of three/five에 의해 destructor,constructor, assignment등 다 해줘야함
+    //이제 안해줘도됨
+    //copy constructor와 copy assignment는 애초에 smart pointer가 copy가 불가능 하기때문에 만들지 않아도 되는것이고, 
+    //move constructor와 move assignment는 컴파일러가 자동으로 만들어주는 함수들이 커버가 가능하기 때문에 만들어 주지 않아도 되는것
+    //unique_ptr를 member var로 가지고있는경우에는, class object copy가 불가능하기 때문에 copy를 시도하는 경우 컴파일이 되지 않습니다.
+};
+
+int main(int argc, const char * argv[]) {
+    Zoo zo(1);
+    return 0;
+}
+
+
+//
+#include <iostream>
+#include <memory>
+
+class Cat{
+public:
+    Cat() : mVar{std::make_unique<int>()} {}
+    virtual ~Cat(){}
+    
+    //에러 피하기위해 copy constructor
+    Cat(const Cat& other) : mVar{std::make_unique<int>(*other.mVar)} {}
+    //서로 다른 int를 uniquePtr이 포인팅함
+    //*주소 = value
+private:
+    std::unique_ptr<int> mVar;
+};
+
+int main(int argc, const char * argv[]) {
+    Cat kitty;
+    Cat nabi = kitty; //원랜 컴파일 에러
+    //주솟값이 복사가 되므로 같은 int를 uniquePtr이 포인팅하기때문
+    return 0;
+}
