@@ -1,3 +1,7 @@
+//operator overloading은 클래스 안과 밖에서 모두 정의할 수 있는데
+//public member만으로 충분하다면 클래스 밖에서 정의를 해주고
+//private member에 접근을 해야 한다면 클래스 안에서 정의를 해야 한다.
+
 #include <iostream>
 struct complexNum{
     double real;
