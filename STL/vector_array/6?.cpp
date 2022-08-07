@@ -5,6 +5,8 @@
 //  Created by 김현배 on 2022/02/20.
 //
 
+//move cons/assignment 나 destructor처럼 절대  exception이 나지 않는 곳에는 noexcept를 붙여줘야 optimization이 됩니다.
+    
 #include <iostream>
 #include <vector>
 class Cat{
