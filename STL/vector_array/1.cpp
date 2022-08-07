@@ -26,6 +26,8 @@ int main(int argc, const char * argv[]) {
         nums[i]=i;
     }
     
+    //delete 필요없음
+    
     //벡터기본(벡터는 힙공간 배열을 가리키는 포인터와, 사이즈, 캐패시티 정보로 구성된다)
     std::vector<int> numss{0,1,2,3,4};
     std::cout<<numss.size()<<std::endl; //5
