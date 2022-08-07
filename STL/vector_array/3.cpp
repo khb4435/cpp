@@ -19,5 +19,7 @@ int main(int argc, const char * argv[]) {
     //마지막 원소가 아닌 원소들에 추가/삭제는 0(n)초가 걸림
     nums.emplace_back(nums.begin(),3);//모든 엘레멘트들 뒤로 한칸식 이동 하고 첫번째에 삽입
     nums.erase(nums.begin());//첫번째원소 지우고 모든 엘레멘트 한칸 앞칸 앞으로 이동
+    
+    //고로 최대한 0(n)보다 0(1)의 시간할당이 요구되는 작업위주로 해야한다.
     return 0;
 }
