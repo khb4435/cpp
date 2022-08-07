@@ -22,6 +22,7 @@ int main(int argc, const char * argv[]) {
     
     //move process없게 바로 백터공간에 값이 들어간다.
 //    cats.emplace_back("changmin"); 이렇게. 근데 이걸 가리키게 어떻게함? 이렇게 밑에처럼
+    //pushback보다 이게 좋은거 이렇게 만들어진 백터공간을 레퍼런스로 받아줄 수 있음
     Cat& cat=cats.emplace_back("changmin"); //g++ 4.cpp -std=c++17
     
     Cat nabi{"nabi"};// Lvalue = copy
