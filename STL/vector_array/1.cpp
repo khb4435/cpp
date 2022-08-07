@@ -43,6 +43,7 @@ int main(int argc, const char * argv[]) {
     }std::cout<<std::endl;
     
     //2.iterator based
+    //여기서 end는 백터마지막공간 다음공간을 포인팅한다.
     for(auto itr=numss.begin(); itr!=numss.end(); itr++){
         std::cout<<(*itr)<<" ";
     }std::cout<<std::endl;
