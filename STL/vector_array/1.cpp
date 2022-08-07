@@ -53,24 +53,6 @@ int main(int argc, const char * argv[]) {
     }std::cout<<std::endl;
 }
 
-    ----------    ----------    ----------    ----------    ----------    ----------    ----------    ----------
-    class Cat{
-        public:
-            explicit Cat(int age):mAge{age} {}
-            void speak(){
-                std::cout<<"meow"<<std::endl;
-                }
-        private:    
-            int mAge;
-    };
-
-    int main(){
-        std::vector<Cat>cats;
-        cats.emplace_back(Cat(1));
-        cats.emplace_back(Cat(1));
-        cats.emplace_back(Cat(1));
-        cats.emplace_back(Cat(1));
-        //값만 들어가는 것 처럼 보인다.
         
         for(auto& cat : cats){
             cat.speak();
