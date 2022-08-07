@@ -5,6 +5,10 @@
 //  Created by 김현배 on 2022/02/20.
 //
 
+//vector? 
+1.dynamic size array
+2.sequence array
+
 #include <iostream>
 #include <vector>
 
