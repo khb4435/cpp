@@ -22,6 +22,7 @@ int main(){
 //2.쓰레드 소멸자
 //std::terminate : 쓰레드가 삭제될 때 불려지는 함수
 //joinable한 상태(join을 아직 안한 상태)이면 std::terminate가 호출된다.
+//즉 메인함수가 종료되면서 join되지 않은 쓰레드르 없애려고 할 때 호출된다.
 void fn(){
     int a=0;
     std::cout<<"fn"<<std::endl;
