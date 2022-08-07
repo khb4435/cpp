@@ -5,7 +5,7 @@
 //global,static이 프로세스 전체에 대한 라이프 사이클을 갖고 있다면 얘는 쓰레드에 대한 라이프 싸이클을 갖는다.
 
 int globalNum=0;
-thread_local int tlNum=0;
+thread_local int tlNum=0; //쓰레드함수 바로 위에 만들어지는데 이 초깃값으로 만들어진다.
 
 void fn(){
     int fnNum=2;
