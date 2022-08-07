@@ -6,7 +6,7 @@
 //
 
 //move cons/assignment 나 destructor처럼 절대  exception이 나지 않는 곳에는 noexcept를 붙여줘야 optimization이 됩니다.
-    
+//emplace_back시 다른공간있으면 다른공간에 할당되는데 copy보다 move로 해결하기 위해 
 #include <iostream>
 #include <vector>
 class Cat{
