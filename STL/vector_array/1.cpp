@@ -67,9 +67,13 @@ int main(int argc, const char * argv[]) {
     int main(){
         std::vector<Cat>cats;
         cats.emplace_back(Cat(1));
-                cats.emplace_back(Cat(1));
-                cats.emplace_back(Cat(1));
-                cats.emplace_back(Cat(1));
-    //값만 들어가는 것 처럼 보인다.
+        cats.emplace_back(Cat(1));
+        cats.emplace_back(Cat(1));
+        cats.emplace_back(Cat(1));
+        //값만 들어가는 것 처럼 보인다.
+        
+        for(auto& cat : cats){
+            cat.speak();
+        }
     
     
