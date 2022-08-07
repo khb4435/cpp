@@ -1,6 +1,8 @@
 #include <iostream>
 #include <thread>
 
+g++ main.cpp -pthread
+
 void fn(){
     int a=0;
     std::cout<<"fn"<<std::endl;
