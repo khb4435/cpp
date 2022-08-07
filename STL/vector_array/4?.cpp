@@ -21,6 +21,7 @@ int main(int argc, const char * argv[]) {
     cats.emplace_back(Cat{"nabi"}); //move process가 있다
     
     //move process없게 바로 백터공간에 값이 들어간다.
+//    cats.emplace_back("changmin"); 이렇게. 근데 이걸 가리키게 어떻게함? 이렇게 밑에처럼
     Cat& cat=cats.emplace_back("changmin"); //g++ 4.cpp -std=c++17
     
     Cat nabi{"nabi"};// Lvalue = copy
