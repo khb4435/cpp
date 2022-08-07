@@ -31,7 +31,7 @@ int main(int argc, const char * argv[]) {
     //벡터기본(벡터는 힙공간 배열을 가리키는 포인터와, 사이즈, 캐패시티 정보로 구성된다)
     std::vector<int> numss{0,1,2,3,4};
     std::cout<<numss.size()<<std::endl; //5
-    numss.emplace_back(5);
+    numss.emplace_back(5); //이렇게 보면 int의 값이 들어가는 걸 볼 수 있음
     std::cout<<numss.size()<<std::endl; //6
     numss.pop_back();
     std::cout<<numss.size()<<std::endl; //5
@@ -47,8 +47,29 @@ int main(int argc, const char * argv[]) {
         std::cout<<(*itr)<<" ";
     }std::cout<<std::endl;
     
-    //3.range based loop (제일빠름)
+    //3.range based loop (제일빠름, 제일 안정적이다.)
     for(const int& num : numss){
         std::cout<<num<<" ";
     }std::cout<<std::endl;
 }
+
+    ----------    ----------    ----------    ----------    ----------    ----------    ----------    ----------
+    class Cat{
+        public:
+            explicit Cat(int age):mAge{age} {}
+            void speak(){
+                std::cout<<"meow"<<std::endl;
+                }
+        private:    
+            int mAge;
+    };
+
+    int main(){
+        std::vector<Cat>cats;
+        cats.emplace_back(Cat(1));
+                cats.emplace_back(Cat(1));
+                cats.emplace_back(Cat(1));
+                cats.emplace_back(Cat(1));
+    //값만 들어가는 것 처럼 보인다.
+    
+    
