@@ -2,7 +2,7 @@
 #include <thread>
 #include <chrono>
 #include <vector>
-//1.쓰레드 생성자
+//1.쓰레드 생성자
 void fn(){
     int a=0;
     std::cout<<"fn"<<std::endl;
@@ -40,6 +40,7 @@ int main(){
 
 //4.detach
 //쓰레드 객체로부터 쓰레드 실행을 분리시킨다 : 분리됬기때문에 main이 끝나도 아무 문제없이 쓰레드가 동작할 수 있는 것
+//쓰레드객체가 함수 포인팅하는거를 없앤다고 생각하면됨
 //그런데 실제 상황에서 detach를 쓰지 않는게 좋다? detach를 통해 끊어지면 다시 커뮤니케이션을 하기가 힘들다.
 void fn(){
     int a=0;
