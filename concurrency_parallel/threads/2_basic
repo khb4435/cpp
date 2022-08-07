@@ -56,8 +56,9 @@ int main(){
     std::this_thread::sleep_for(std::chrono::seconds(3));
 }
 
+//detach를 하게되면 재연결을 해주기 힘들기 때문에 
 //그래서 실제 프로그램에서는 detach를 사용하여 분리하는 것 보다는 global scope같은 곳에 쓰레드객체를 만들고
-//해당 쓰레드가 끝날때까지 기다려주는게 좋다.
+//해당 쓰레드가 끝날때까지 함께 가주는 것이 좋다.
 //근데 또 gThread를 영원히 기다려주는 상황이 올 수도 있기 때문에 c++ 20. stop token을 지원하는 jthread를 쓰는게 더 좋다
 std::thread gThread;
 void fn(){
