@@ -17,7 +17,7 @@ private:
 
 int main(int argc, const char * argv[]) {
     std::vector<Cat> cats;
-    cats.emplace_back(Cat{"kitty"}); //move process가 있다
+    cats.emplace_back(Cat{"kitty"}); //스택위에 Cat객체의 임시객체가 만들어지고 이 값들이 백터동안에 Move!된다.
     cats.emplace_back(Cat{"nabi"}); //move process가 있다
     
     //move process없게
