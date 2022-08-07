@@ -25,7 +25,8 @@ int main(int argc, const char * argv[]) {
     //pushback보다 이게 좋은거 이렇게 만들어진 백터공간을 레퍼런스로 받아줄 수 있음
     Cat& cat=cats.emplace_back("changmin"); //g++ 4.cpp -std=c++17
     
-    Cat nabi{"nabi"};// Lvalue = copy
+    Cat nabi{"nabi"};
+    cats.emplace_back(nabi); //Lvalue copy
     cats.emplace_back(std::move(nabi)); //Rvalue = move
     return 0;
 }
