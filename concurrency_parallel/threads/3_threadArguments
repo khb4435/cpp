@@ -85,14 +85,14 @@ int main(){
     std::cout<<"retVal"<<num<<std::endl; //3출력
 }
 
-//이 벨류를 다른 쓰레드에서 사용하더라도 쉽게 받을 수 있는 트릭이 있다. 람다!
+//이 벨류리턴을 다른 쓰레드에서 사용하더라도 쉽게 받을 수 있는 트릭이 있다. 람다!
 int fn(){
     return 3;
 }
 
 int main(){
     int num=0;
-    std::thread t1([&num](){ //직관적이다.
+    std::thread t1([&num](){ //앞의 예제보다도 직관적이다.
         num=fn();
     })
     t1.join();
