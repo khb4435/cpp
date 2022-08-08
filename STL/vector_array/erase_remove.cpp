@@ -26,3 +26,22 @@ int main(int argc, const char * argv[]) {
     }std::cout<<std::endl;
     return 0;
 }
+
+---------------
+    
+    int main(int argc, const char * argv[]) {
+    std::vector<int> nums{0,1,2,3,4,5,6}; //size 6
+    
+    nums.erase(std::remove_if(nums.begin(),nums.end(),[](int n){
+        if(n&2==0)
+        {
+            return true; //짝수면 remove_if에 대한 true면서 삭제된다.
+        }
+        return false;
+        ),nums.end());
+
+    for(auto& num:nums){
+        std::cout<<num<<" "; //1 3 5
+    }std::cout<<std::endl;
+    return 0;
+}
