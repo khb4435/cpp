@@ -5,6 +5,8 @@
 //  Created by 김현배 on 2022/02/20.
 //
 
+//결론적으로는 remove보다 remove if쓰는게 낫다.
+//remove는 코드 하나씨 확인하면서 지우고 나머지 뒤 원소를 다 앞칸씩 무브시키는 방법으로한다. 
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -13,9 +15,9 @@ int main(int argc, const char * argv[]) {
     std::vector<int> nums{0,1,0,1,0,1}; //size 6
     
     auto itr=std::remove(nums.begin(),nums.end(),0);
-    //begin부터 end까지 모든 0 엘레멘트 삭제 그리고 마지막 엘레멘트 리턴
-    //여전히 사이즈는 6
-    
+    //begin부터 end까지 모든 0 엘레멘트 삭제,    //여전히 사이즈는 6 
+    //그리고 마지막 엘레멘트+1의 주솟값 리턴
+
     nums.erase(itr,nums.end()); //itr부터 end까지 사이즈 삭제
     //사이즈3
     
