@@ -52,11 +52,4 @@ int main(int argc, const char * argv[]) {
     for(const int& num : numss){
         std::cout<<num<<" ";
     }std::cout<<std::endl;
-}
-
-        
-        for(auto& cat : cats){
-            cat.speak();
-        }
-    
-    
+}   
