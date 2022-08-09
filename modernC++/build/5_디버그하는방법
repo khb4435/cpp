@@ -29,8 +29,9 @@ int main(){
 //g++ main.cpp -g : 디버그모드 컴파일
 //gdb a.out
 //start : 코드를 한줄씩 실행시킬 수 있음
-//next : 다음줄로 이동
-//매번 한줄씩 넘어가기 힘들다 : ctrl X A
+//exit : 종료
+//next(n) : 다음줄로 이동
+//매번 한줄씩 넘어가기 힘들다 : ctrl X A (ui기능)ㅠ
 //이때도 n을 누르며 한줄한줄 실행 가능
 //브레이크 포인트 : break 26 : 26째줄에 break point 건다
 //break sub : sub함수에 break point 건다.
