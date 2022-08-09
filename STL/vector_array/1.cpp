@@ -37,7 +37,8 @@ int main(int argc, const char * argv[]) {
     std::cout<<numss.size()<<std::endl; //5
     
     //벡터값 추출하는 세가지 방법
-    //1.index based ((3이 제일 편하고 빠르지만 벡터 사이즈가 변화할 시 무조건 1번 써야한다))
+    //1.index based 
+    //사이즈 변화하는 벡터의 경우 무조건 이 방법 써야한다.
     for(std::size_t idx=0; idx<numss.size(); idx++){
         std::cout<<numss[idx]<<" ";
     }std::cout<<std::endl;
@@ -49,6 +50,7 @@ int main(int argc, const char * argv[]) {
     }std::cout<<std::endl;
     
     //3.range based loop (제일빠름, 제일 안정적이다.)
+    ((3이 제일 편하고 빠르지만 벡터 사이즈가 변화할 시 무조건 1번 써야한다))
     for(const int& num : numss){
         std::cout<<num<<" ";
     }std::cout<<std::endl;
