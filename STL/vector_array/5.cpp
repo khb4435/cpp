@@ -2,6 +2,7 @@ int main(){
   std::vector<int>nums{1,2,3,4,5};
   std::cout<<sizeof(nums)<<std::endl; //24
   //지금 개발 중인 프로그램이 32비트라면 포인터는 4Byte, 64비트 프로그램이라면 포인터는 8Byte로 크기가 고정됩니다.
+  //x86이 32비트 기반이고, x64가 64비트 기반이다.
   //벡터는 3가지의 타입으로 구성된다. 힙공간을 가리키는 포인터, size, capacity
   
   std::cout<<nums.size()<<std::endl; //5
