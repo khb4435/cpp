@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
     std::vector<Cat> cats;
     
     cats.reserve(2);
-    cats.emplace_back("kitty");
+    cats.emplace_back("kitty"); //여기서 복사생성자가 불러지는게아님
     cats.emplace_back("nabi");
     return 0;
 }
