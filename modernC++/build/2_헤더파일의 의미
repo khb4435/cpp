@@ -1,7 +1,7 @@
 #include <iostream>
 //main.cpp
 void foo(); //헤더파일 쓰는 이유
-//이게 전방선언되지 않으면 컴파일이 안됨
+//이게 전방선언되지 않으면 컴파일이 안됨
 
 int main(){
     foo();
@@ -13,8 +13,8 @@ void foo(){
 }
 
 //2./////////////////////////////
-//main.cpp -> 컴파일에러 foo가 도대체 뭔지 알 수 없음
 //g++ main.cpp -o foo -Wall -Werror
+//main.cpp -> 컴파일에러 foo가 도대체 뭔지 알 수 없음
 void foo();
 int main(){
     foo();
@@ -26,10 +26,13 @@ void foo(){
     std::cout<<"foo"<<std::endl;
 }
 
-//g++ main.cpp -c(object파일생성) -Wall -Werror (사람이 읽을 수 없음)
-//g++ main.cpp -S(object파일생성) -Wall -Werror (사람이 읽을 수 있는 어셈블리파일)
+//컴파일과정 .cpp->.s->.o->exe
+//컴파일 어셈블리 링킹
 
-//g++ foo.cpp -c 
+//g++ main.cpp -c -Wall -Werror (어셈블리까지만 수행하고 링크는 수행X) -> main.o 생성
+//g++ main.cpp -S -Wall -Werror (사람이 읽을 수 있는 어셈블리파일) ->main.S 생성
+
+//g++ foo.cpp -c -> foo.o생성
 //이제 main.o와 foo.o을 링킹
 //g++ main.o foo.o -o foo
 
