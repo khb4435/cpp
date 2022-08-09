@@ -6,7 +6,7 @@
 //
 
 //C스타일이 아닌 std array로 쓰면 iterator를 쓸수있다는건 아는데 다른 장점이 더 있나요?
-//vector에서 예시든 nums.begin()이런게 array에서도 가능하다는것
+//vector에서 예시들었던 nums.begin()이런게 array에서도 가능하다는것
 //Array.size()도 하나의 장점이 되겠네요
 
 //array를 굳이 써야할 이유가 있을까요?? vector로 모든경우에 대해서 대체가 가능한것 같아서요. vector선언때 size를 선언하면 메모리 할당시간이 엄청 느릴거 같지도 않고....
