@@ -5,9 +5,11 @@
 //  Created by 김현배 on 2022/02/20.
 //
 
-//move cons/assignment 나 destructor처럼 절대  exception이 나지 않는 곳에는 noexcept를 붙여줘야 optimization이 됩니다.
-//emplace_back시 다른공간있으면 다른공간에 할당되는데 copy보다 move로 해결하기 위해 
+//move cons/assignment 나 destructor처럼 절대 exception이 나지 않는 곳에 수행되야하는 놈들은 noexcept를 붙여줘야 optimization이 됩니다.
+//emplace_back시 다른공간있으면 다른공간에 할당되는데 copy보다 move로 해결하기 위해
+//move생성자정의
 //다시한번 애초에 이런일 안 일어나도록 큰 공간 reserve해주자
+
 #include <iostream>
 #include <vector>
 class Cat{
