@@ -2,7 +2,7 @@
 
 int main(){
     int i; //not initialized!!!
-    //g++ main.cpp -o greeting -Wall(warning이 있으면 컴파일이 아예 되지 않게 함)
+    //g++ main.cpp -o(outfile) greeting -Wall(모든 모호한 코딩에 경고)
     //g++ main.cpp -o greeting -Wall -Werror(모든 warning이 에러로 바뀜)
     std::cout<<"hi"<<std::endl;
 
@@ -10,8 +10,15 @@ int main(){
     //c++ 17
     //g++ main.cpp -o greeting -Wall -Werror -std=c++17 -g(디버깅 인포)
     //g++ main.cpp -o greeting -Wall -Werror -std=c++17 -v(컴파일 과정을 자세히 알고 싶음)
-    //g++ main.cpp -o greeting -Wall -Werror -std=c++17 -00 (optimization level)
-                                                    //  -01
-                                                    //  -02
-    ////g++ main.cpp -o greeting -Wall -Werror -std=c++17 -00 -march=native (운영체제?그런거에 맞게끔 바이너리파일 만듬)
+    //g++ main.cpp -o greeting -Wall -Werror -std=c++17 -O0 (최적화레벨0, 수행X)
+                                                    //  -O1 (최적화레벨1, O0보다는 최적화수행)
+                                                    //  -O2 (최적화레벨2, 거의대부분의 최적화)
+    //g++ main.cpp -o greeting -Wall -Werror -std=c++17 -00 -march=native 
+    //GCC에게 각각의 CPU에 맞춰 코드를 만들어야 함을 알려줍니다. 
+    //각기 다른 시스템의 CPU에서는 각자 다른 기능을 보유하고, 다른 명령셋을 지원하며, 개별 코드 실행에 각각 다른 방식을 활용합니다. 
+    //-march 플래그는 보유한 CPU에 맞게 기능, 특징, 명령셋, 고유의 동작 등을 포함한 코드를 컴파일러에게 만들어달라고 지시합니다.
+    
+    //어떤 CPU를 쓰는지 모르겠거나 어떤 설정을 선택해야 할지 모르겠다면, 아마 그냥-march=native 설정을 사용할 수 있습니다. 
+    //이 플래그를 사용하면 GCC는 프로세서를 감지하고 자동으로 적당한 플래그를 설정합니다. 그러나 다른 CPU에서 사용할 패키지를 컴파일하려 한다면 이 플래그를 쓰면 안됩니다.
+    
 }
