@@ -1,4 +1,5 @@
-//std::span -> 연속적인 메모리공간이면 그 어떤것이던 인자로 받는다.
+//std::span -> 연속적인 메모리공간을 메모리 시작점고 길이를 통해 표현하는 추상화된 컨테이너임
+//string_view도 마찬가지임
 
 #include <array>
 #include <vector>
