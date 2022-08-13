@@ -43,5 +43,6 @@ int main(){
     std::cout<<sizeof(c)<<std::endl; //32 -> string object의 크기.
     std::cout<<c.size()<<std::endl; //7
 
-    //문자열이 string object의 크기를 넘지 않는다면 그냥 문자열을 스택에 할당하라는데,, 예제있나?
+    //String은 길이가 자유롭게변하는 문자열 타입입니다. 때문에 data자체는 heap에 올라가야합니다. 
+    //다만컴파일러의 string optimizer가 짧은길이의 문자열에대해서는 stack에 올리는 경우는 있습니디.
 }
