@@ -17,9 +17,10 @@ void storeByRRef(std::string &&s){
 
 int main(){
     std::string a="abc";
-    storeByValue(a);
-    storeByLRef(a);
+    storeByValue(a); //2copy
+    storeByLRef(a); //1copy
 
+    //0 copy
     storeByRRef("abc");
     storeByRRef(std::move(a));
 }
