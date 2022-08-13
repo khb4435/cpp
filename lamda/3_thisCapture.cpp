@@ -5,6 +5,8 @@
 //  Created by 김현배 on 2022/02/20.
 //
 
+//일단 this는 클래스와 관련이 있음
+
 #include <iostream>
 class Cat{
 public:
@@ -13,14 +15,18 @@ public:
         std::cout<<"meow"<<std::endl;
     }
     void test() const{
-        //auto lambda = [] (){ 이거로 하면 에러생김
+        //auto lambda = [] (){ 이거로 멤버변수/함수 접근하려고하면 에러생김
+        
+        //멤버함수내에서 그냥 멤버변수,멤버함수 접근은 괜찮은데(this에 연결된것들임) lamda scope에서 접근하려고 하며 오류남
+        //그래서
         //auto lambda = [this] (){ //이거나
-        auto lambda = [&] (){
+        auto lambda = [&] (){ //->컴파일러가 알아서 auto this capture
             std::cout<<"lambda function"<<std::endl;
             
-            //std::cout<<mAge<<std::endl;
+            std::cout<<mAge<<std::endl;
             std::cout<<this->mAge<<std::endl;
-            //speak();
+            
+            speak();
             this->speak();
         };
         lambda();
