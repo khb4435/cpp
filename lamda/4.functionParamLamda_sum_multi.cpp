@@ -11,6 +11,8 @@
 #include <algorithm>
 int main(int argc, const char * argv[]) {
     std::vector<int> nums {1,2,3,4,5,6,7,8,9,10};
+    
+    //reduce - c++17
     int sum = std::reduce(nums.begin(),nums.end(),0,[](int a,int b)
     {
         return a+b;
