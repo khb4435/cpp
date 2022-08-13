@@ -25,7 +25,7 @@ void runFunction(int i, const std::function<void(int)>&fn){
     fn(i);
 };
 
-void runFunctions(const std::vector<std::function<void(int)>>&functions){
+void runFunctions(const std::vector<std::function<void(int)>>&functions){//여러개 받음
     int i=0;
     for(const auto& fn : functions){
         fn(++i);
