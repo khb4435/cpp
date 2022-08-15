@@ -27,17 +27,19 @@ int main(int argc, const char * argv[]) {
     std::cout<<"jkl: "<<std::hash<std::string>{}("jkl")<<std::endl; //해시값 출력 ex)473284729356
     //해쉬값이 모두 다르다. 각 문자열이 해쉬평션을 통하면 저 해쉬값들이 나옴
     
-    //근데 해쉬값이 너무 큼 -> 버킷 카운트에 해쉬값 담아놈 (0,1,2,3 등등 과 같이 간소화되는 해쉬값)
-    std::cout<<uordSet.bucket_count()<<std::endl; //13?
+    //근데 해쉬값이 너무 큼 -> 버킷 카운트(양동이)에 해쉬값 나눠 담아놈 (0,1,2,3 등등 과 같이 간소화되는 해쉬값)
+    std::cout<<uordSet.bucket_count()<<std::endl; //13
     //해쉬값들이 5개의 버킷중에 몇번째 버킷에 들어갔는지도 알 수 있음
     std::cout<<"abc: "<<uordSet.bucket("abc")<<std::endl; //4번째 bucket
     std::cout<<"def: "<<uordSet.bucket("def")<<std::endl; //7
     std::cout<<"ghi: "<<uordSet.bucket("ghi")<<std::endl; //4
     std::cout<<"jkl: "<<uordSet.bucket("jkl")<<std::endl; //8
     
-    //키값으로 해쉬값 찾는시간, 해쉬값으로 버킷카운트넘버 구하는 시간, 그 버킷카운트에서 링크드리스트 타면서 추가/삭제 하는 시간은 0(1)
+    //키값으로 (through hash function) 해쉬값 찾는시간, 해쉬값으로 버킷카운트넘버 구하는 시간, 그 버킷카운트에서 더블링크드리스트 타면서 추가/삭제 하는 시간은 0(1)
     
     //emplace많아지면 링크드리스트 많아질테고 걸리는시간 0(1)보다 커지게 될 것같으면 버킷 카운트 증가됨
-    //그럼 rehashing일어나면서 시간 지연됨. 이를 방지하기 위해 reserve
+    //그럼 rehashing일어나면서 시간 지연됨0(n). 이를 방지하기 위해 reserve로 충분한 메모리 확보필요
+    uordSet.reserve(10000);
+    //알아서 버킷카운트 그에 맞게 만들어줌
     return 0;
 }
