@@ -26,7 +26,7 @@ private:
 };
 
 
-//이거 없으면 컴파일에러
+//이거 없으면 컴파일에러 -> Cat object를 해쉬펑션 타줄 수 있게
 struct CatHash{
     std::size_t operator() (Cat const& c) const noexcept{
         std::size_t h1=std::hash<int>{}(c.age()); //나이로 해쉬값 만들고
