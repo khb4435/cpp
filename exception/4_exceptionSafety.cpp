@@ -28,9 +28,14 @@ int divide(int a, int b){
 
 void f(){
     //g=1; 이걸 밑으로 보내기만 하면됌
-    //즉 strong exception safety를 중시하는 함수란 변경될 사안에 있는 것들을 exception 밑으로 빼는등..
+    //즉 strong exception safety를 중시하는 함수란 변경될 사안에 있는 것들을 exception 밑으로 뺀다.
+    divide(10,0);
+    g=1;
+    //그 결과를 원한다면 로컬 변수로 저장
     int a = divide(10,0);
-    g=a;
+    
+    //g=divide(10,0); 당연히 strong safety garuntee를 원하면 exception이 불려질수도 있는 함수를
+    //이렇게 사용해도 안됨
 }
 
 int main(int argc, const char * argv[]) {
