@@ -35,6 +35,6 @@ void buy_shirt(Clothing_size size, Clothing_color color){
 }
 
 int main(int argc, const char * argv[]) {
-    buy_shirt(Clothing_size::medium,Clothing_color::red);
+    buy_shirt(Clothing_size::medium,Clothing_color::red); //버그차단
     return 0;
 }
