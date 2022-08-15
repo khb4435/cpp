@@ -22,7 +22,7 @@ int main(int argc, const char * argv[]) {
     
     //고양이 만드려면
     //cat=Cat();
-    //std::optional<Cat> cat{Cat()}; //tmp Cat 생성과 move를 하기 때문에 효율적인 방법은 아님
+    //std::optional<Cat> cat{Cat()}; //tmp Cat 생성과 move constructor를 하기 때문에 효율적인 방법은 아님
     std::optional<Cat> cat{std::in_place}; //optional공간안에 고양이를 바로 만든다
     
     if(!cat){
