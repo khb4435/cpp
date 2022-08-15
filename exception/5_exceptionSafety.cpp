@@ -32,6 +32,7 @@ void f(){
         int a = divide(10,0);
         g=a;
     }//main까지 exception이 propagated되지 않음!!!!
+    //catch가 불려질때까지 팝되는데, catch가 여기 있어서 f가 팝이 안됬나봄
     catch(const std::exception(&e))
     {
     }
