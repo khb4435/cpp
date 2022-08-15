@@ -7,8 +7,8 @@
 
 
 
-//set은 내부적으로 tree구조 -> sorting됨 0(logN)
-//unordered set은 0(1) 이고 sorting 되지 않는다
+//set은 내부적으로 BST or red block tree구조 -> sorting됨 0(logN)
+//unordered set은 hash구조(키)로 0(1) 이고 sorting 되지 않는다
 #include <iostream>
 #include <string>
 #include <unordered_set>
