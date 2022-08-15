@@ -6,11 +6,18 @@
 //
 
 
-//map은 ((key&value))
+//map은 set(BST구조or red black tree)+(key&value)
+//set과 같이 find, insertion, deletion 모두 0(log(n))
 #include <iostream>
 #include <map>
 int main(int argc, const char * argv[]) {
-    std::map<int,int> numPairs;
+    
+    std::map<int,int> numPairs; //int와 int를 엮어주는
+    //std::map<int,std::string> numPairs; //가능
+    //std::map<std::string,int> numPairs; //다 가능
+    //키가 std::string으로 오면 알파벳 순서대로 정렬됨.
+    
+    //(키,벨류)
     numPairs.emplace(1,101);
     numPairs.emplace(2,102);
     numPairs.emplace(3,103);
@@ -29,7 +36,7 @@ int main(int argc, const char * argv[]) {
     //주의합시다
     
     for(const auto& numPair : numPairs){
-        std::cout<<numPair.first<<" "<<numPair.second<<std::endl;
+        std::cout<<numPair.first<<" "<<numPair.second<<std::endl; //키,벨류
     }
     return 0;
 }
