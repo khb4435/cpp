@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  heap
-//
-//  Created by 김현배 on 2022/02/22.
-//
-
 
 //priortity queue진화
 #include <algorithm>
@@ -28,14 +21,18 @@ int main()
         std::cout<<i<<" "; //1,3,5,7,9,11 벡터
     }std::cout<<std::endl;
  
-    //벡터를 힙으로 바꾼다. 0(N) -> prioirity queue tree같음
+    //벡터를 힙으로 바꾼다. 0(N)
+    //prioriory queue구조
     std::make_heap(v.begin(), v.end());
     print("after make_heap, v", v);
     for(auto& i : v){
-        std::cout<<i<<" "; //11,9,5,7,3,1 힙
+        std::cout<<i<<" "; //11,9,5,7,3,1 
     }std::cout<<std::endl;
 
+    
     //pop_heap -> 0(logN)
+    //prioiry queue와 같이 max와 가장 오른쪼 끝으 원소와 swap되고
+    //tree구조의 룰로 부모-자식간 룰에 맞게 swap됨
     std::pop_heap(v.begin(), v.end());
     print("after pop_heap, v", v);
     for(auto& i : v){
@@ -54,7 +51,7 @@ int main()
         std::cout<<i<<" "; //9 7 5 1 3 10
     }std::cout<<std::endl;
     
-    //마지막에 들어온 엘레멘트 다시 정렬 push heap -> 0(logN)
+    //다시 정렬push heap -> 0(logN)
     std::push_heap(v.begin(), v.end());
     for(const auto& i : v){
         std::cout<<i<<" "; //10 7 9 1 3 5
