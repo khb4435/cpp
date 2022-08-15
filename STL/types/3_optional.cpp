@@ -29,6 +29,7 @@ int main(int argc, const char * argv[]) {
         std::cout<<"no value"<<std::endl;
         //std::cout<<answer.value_or(0)<<std::endl;
         //default value사용할 수도 있다.
+        //저 의미는 반환값 int없으면 0 써라!
     }
     return 0; //g++ main.c -std=c++17
 }
