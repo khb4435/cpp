@@ -15,6 +15,7 @@ int main(int argc, const char * argv[]) {
     std::cout<<std::get<std::string>(sv)<<std::endl;
     //유니언멤버에 값을 바꿔주면 destructor/constructor로 타입을 바꿔야 하지만
     //variant를 사용시 필요없음
+    //자동적으로 desctroctor, constructor관리해줌
     sv=std::vector{1,2,3};
     return 0;
 }
