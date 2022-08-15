@@ -9,7 +9,7 @@
 //C에는 예외처리가 없어서 모든 에러를 리턴으로 해결
 //C++에는 optional,pair,tuple등 error return하는 방법외에도
 //exception(try,catch,throw)가 있음
-
+//throw는 r value, catch는 lvalue ref
 #include <iostream>
 #include <exception>
 class Cat{
