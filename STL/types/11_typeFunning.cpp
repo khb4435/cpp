@@ -23,6 +23,8 @@ bool isNeg(float x){
     //unsigned int* ui = (unsigned int*)&x;
     //return *ui & 0x80000000;
     
+    //쓸데없는 메모리 카피 일어난거아냐? ㄴㄴ
+    //컴파일러는 똑똑해서 타입퍼닝 취급한다.
     unsigned int tmp;
     std::memcpy(&tmp, &x, sizeof(x));
     return tmp&0x80000000;
