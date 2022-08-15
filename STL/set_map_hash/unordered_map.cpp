@@ -28,3 +28,5 @@ int main(int argc, const char * argv[]) {
     }
     return 0;
 }
+
+//Cat 등 사용시, hash와 ==가 정의되어야한다.
