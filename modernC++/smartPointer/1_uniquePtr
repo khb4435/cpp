@@ -2,6 +2,7 @@
 //하지만 unique_ptr은 객채에 대한 유일한 소유권을 갖는다
 //즉 이걸 사용하면 이거만 그 객체에 포인팅한다는 말이다.
 //기본적으로 멤버변수로 포인터써야할 때 가장 많이 사용한다!!!
+
 #include <iostream>
 #include <memory>
 class Cat{
@@ -31,7 +32,9 @@ public:
 private:
     int mAge;
 };
+
 class Dog : public Animal {} ;
+
 class Zoo : public Animal {
 public:
     //prefer enum class
