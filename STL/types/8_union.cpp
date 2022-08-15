@@ -5,6 +5,7 @@
 //메모리를 소멸자 써주면서 관리하기 불편.
 //type tracking
 //union-like class, tagged union 검색
+//std::variant가 union보다 낫다.
 union S
 {
     std::string str;
