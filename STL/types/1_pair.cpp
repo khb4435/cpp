@@ -1,13 +1,3 @@
-//
-//  main.cpp
-//  pair_tuple
-//
-//  Created by 김현배 on 2022/02/23.
-//
-
-
-
-
 //pair를쓰면
 //struct a
 //{
