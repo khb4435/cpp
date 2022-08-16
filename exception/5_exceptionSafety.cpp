@@ -23,7 +23,9 @@ private:
 int divide(int a, int b){
     if(b==0){
         throw::std::runtime_error("divide by 0");
-    }
+    }//exception이 divide함수에서 던져지고 f()함수에서 잡힙니다.
+    //그러니까 f()를 부르는 caller, main은 f()가 exception을 던지지 않는다는 것을
+    //알고있고 이를 no throw garuntee라고 한다.
     return a/b;
 }
 
@@ -32,7 +34,6 @@ void f(){
         int a = divide(10,0);
         g=a;
     }//main까지 exception이 propagated되지 않음!!!!
-    //catch가 불려질때까지 팝되는데, catch가 여기 있어서 f가 팝이 안됬나봄
     catch(const std::exception(&e))
     {
     }
