@@ -17,13 +17,13 @@ T add(T a,T b){
 
 int main(int argc, const char * argv[]) {
     int i = add<int>(4,5);
-    //auto i = add(4,5);
+    //auto i = add(4,5); //templete deduction
     float f = add<double>(4.0f,5.8f);
-    //auto f = add(4.0f,5.0f);
+    //auto f = add(4.0f,5.0f); //templete deduction
     std::cout<<i<<" "<<f<<" "<<std::endl;
     
     //auto a = add<auto>("abc","def"); 컴파일에러
-    //operator+ 가 정의되어 있지 않아서.
+    //std::string에 대한 operator+ 가 정의되어 있지 않아서.
     //std::cout<<a<<std::endl;
     
     return 0;
