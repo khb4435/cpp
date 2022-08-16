@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  templete_deduction2
-//
-//  Created by 김현배 on 2022/02/22.
-//
-
-
 
 //g++ main.cpp -Wall
 //./a.out | c++filt -t
@@ -22,6 +14,8 @@ void printVar(T &&a){ //forward reference (universal reference)
     std::string localVar(std::forward(a)); //이게 더 맞음
     //std::forward를 쓰면 Lvalue로 넘어오면 copy시키고
     //Rvalue로 넘어오면 move시킨다
+    
+    
     std::cout<<localVar<<std::endl;
 }
 
