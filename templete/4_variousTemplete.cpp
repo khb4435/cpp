@@ -16,7 +16,8 @@ template <typename T>
 class Stack{
 public:
     void push(T elem){
-//예제 특성상 push 로 들어오는 element는 R-value일 경우는 내부벡터로 move가 되야하고, L-value라면 복사가 되야하기 때문에 pass by value로 만들었습니다.  
+//예제 특성상 push 로 들어오는 element는 R-value일 경우는 내부벡터로 move가 되야하고(0 copy), 
+//L-value라면 복사가 되야하기 때문에(1copy) pass by value로 만들었습니다.  
 //R value로 넘어올때만 &&와 같습니다.
         mVec.emplace_back(std::move(elem));
     }
