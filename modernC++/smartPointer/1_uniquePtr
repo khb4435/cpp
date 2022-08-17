@@ -66,6 +66,9 @@ int main(int argc, const char * argv[]) {
 
 
 ///////////////////////////////////////////////////
+//unique_ptr이 멤버변수로 있을 때 문제점 -> 복사생성자 안되는데 쓰고 싶다면?
+//다만 다른 딥 카피 일어나야함
+
 #include <iostream>
 #include <memory>
 
