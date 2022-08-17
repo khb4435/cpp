@@ -6,7 +6,8 @@
 
 std::string getString(){
     std::string s = "nocope"
-    return s; //복사생략 일어남(임시객체에 복사할 일 생길때)
+    //**임시객체 혹은 r value가 복사과정을 거쳐야할 때 복사생성이 일어나는듯함
+    return s; //복사생략 일어남
     //임시객체에 복사하는 과정 없애버렸다..?
     //사실 s는 처음부터 존재하지도 않게된다...?
     return std::move(s); //복사생략 일어날지 모르고 짠 코드
