@@ -4,8 +4,9 @@ struct ST{
     long a; //8
     int b; //4
     short c; //2
-    //16bytes라고 예상
-}
+    //14bytes라고 예상
+};
+
 int main(){
     std::cout<<sizeof(ST)<<std::endl; //24bytes
     //패딩이 들어갔기 때문임
