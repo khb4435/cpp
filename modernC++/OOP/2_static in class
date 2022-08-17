@@ -1,15 +1,13 @@
 #include <iostream>
 class Cat{
 public:
-    void speak(){ //일반 멤버함수
-        std::cout<<"meow"<<std::endl;
-    }
-    static void staticSpeak(){//객체에 종속되지 않은 static 멤버함수
-        std::cout<<"static meow!!"<<std::endl;
+    void speak(){}//일반 멤버함수
+    static void staticSpeak(){//"객체에 종속되지 않은" static 멤버함수
         //std::cout<<mAge<<std::endl; //mAge는 멤버변수이고 멤버변수는 객체에 종속됨 즉
         //this->mAge임.
-        //일반 멤버함수는 this->speak()같이 객체에 마찬가지로 종속되어 있어 객체에 종속된 멤버변수를 멤버함수내에서 쓸 수 있지만 이건 아님
-        //speak();
+        //일반 멤버함수는 this->speak()같이 객체에 마찬가지로 종속되어 있어 
+        //객체에 종속된 멤버변수를 멤버함수내에서 쓸 수 있지만 이건 아님
+        //speak(); 
     }
 private:
     int mAge;
@@ -30,39 +28,14 @@ int main(int argc, const char * argv[]) {
 class Cat{
 public:
     void speak(){
-        static int count=0; //static 멤버변수
         count++;
-        std::cout<<count<<" "<<"meow"<<std::endl;
     }
 private:
+    static int count;
     int mAge;
 };
 
-int Cat::count =0;//초기화는 여기서
-
-int main(int argc, const char * argv[]) {
-    Cat kitty;
-    Cat nabi;
-    kitty.speak(); //count 1
-    nabi.speak(); // count 2
-    //count를 두 객체가 공유해서 쓰는 것 처럼 보인다.
-    return 0;
-}
-
-////////////////////////////////////////////////////////////
-#include <iostream>
-class Cat{
-public:
-    void speak(){
-        count++;
-        std::cout<<count<<" "<<"meow"<<std::endl;
-    }
-private:
-    int mAge;
-    static int count; //static 멤버변수
-};
-
-int Cat::count =0;//초기화는 여기서
+int Cat::count = 0;//초기화는 여기서
 
 int main(int argc, const char * argv[]) {
     Cat kitty;
