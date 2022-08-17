@@ -1,6 +1,7 @@
 //shared pointer는 많은 스마트 포인터들에 둘려쌓여질 수 있음
 //shared pointer는 count라는 게 있는데 포인팅당하는 갯수를 알려줌
 //count가 0일 때 소멸자가 호출된다
+
 #include <iostream>
 class Cat{
 public:
@@ -21,10 +22,12 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
+///////////////////////////////////////////////////////////////
 
 //shared ptr에서 메모리 릭이 발생하는 경우 : 객체 원형 사이클 포인터
 //메인 함수가 종료되는데(mPtr해제) count가 남아있어서
 //->멤버변수로 weakPtr로 해결
+
 #include <iostream>
 #include <memory>
 class Cat{
@@ -42,6 +45,8 @@ int main(int argc, const char * argv[]) {
     //메인 함수가 종료되는데(mPtr해제) count가 1로 남아있어서 객체 소멸x 
     return 0;
 }
+
+///////////////////////////////////////////////////////
 
 //sharedpointer 메모리릭 두번째 :객체 원형 사이클 포인터
 //멤버변수 weakPtr로 해결
@@ -61,8 +66,8 @@ int main(){
     //count가 남아있어서 객체 소멸안됌
 }
 
-
-//shared_ptr이 멤버변수로 있을 때
+//////////////////////////////////////////////////////////////////////
+//shared_ptr이 멤버변수로 있을 때 일어날 수 있는 예
 #include <iostream>
 #include <memory>
 class Cat{
@@ -70,6 +75,7 @@ public:
     explicit Cat(int n) : mVar{std::make_shared<int>(n)} {}
     ~Cat() noexcept {}
     
+    //근데 다른 int를 포인팅하게 하고 싶다면?
     Cat clone() const{
         Cat tmp{*mVar};
         return tmp;
@@ -84,6 +90,7 @@ int main(int argc, const char * argv[]) {
     //멤버변수가 unique_ptr이였음 절대 안됬음.
     //같은 int를 kitty.mVar과 nabi.mVar이 포인팅함!!
     
+    //같은 int를 포인팅하는게 목적이였을 수도 있지만
     //근데 다른 int를 포인팅하게 하고 싶다면?
     Cat nabi2{kitty.clone()};
     return 0;
