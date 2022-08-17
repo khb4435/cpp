@@ -26,3 +26,5 @@ int main(){
     kitty.setName("kitty"); //0copy
     //r value인 kitty를 임시공간을 만들고 value에 복사해서 넘겨주는게 아니라
     //복사생략을 통해 name이 "kitty"가리킨다.
+
+    //**임시객체 혹은 r value가 복사과정을 거쳐야할 때 복사생성이 일어나는듯함
