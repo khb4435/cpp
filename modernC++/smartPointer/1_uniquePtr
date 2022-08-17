@@ -15,9 +15,11 @@ private:
 
 int main(int argc, const char * argv[]) {
     std::unique_ptr<Cat> catPtr = std::make_unique<Cat>();
-    //std::unique_ptr<Cat> catPtr1 = std::make_unique<Cat>(); //불가
+    //std::unique_ptr<Cat> catPtr1 = std::make_unique<Cat>(); 
+    //동일 객체가 복수 개의 포인터 받는ㄱ 불가
+    
     std::unique_ptr<Cat> catPtr2 = std::move(catPtr); //소유권 이전은 가능
-    //왜냐면 Cat객체는 한개의 포인터만 있어야함
+    //왜냐면 유니크 포인팅 당하는 객체는 한개의 포인터만 있어야함
     return 0;
 }
 
@@ -47,7 +49,8 @@ public:
         }
     }
 private:
-    std::unique_ptr<Animal*> mAnimal;
+    std::unique_ptr<Animal*> mAnimal; //멤버변수로서의 유니크 포인터
+    
     //그냥 포인터였으면
     //rule of three/five에 의해 destructor,constructor, assignment등 다 해줘야함
     //이제 안해줘도됨
@@ -62,7 +65,7 @@ int main(int argc, const char * argv[]) {
 }
 
 
-//
+///////////////////////////////////////////////////
 #include <iostream>
 #include <memory>
 
