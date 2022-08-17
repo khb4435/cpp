@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <vector>
+
 class Cat{
     public:
         Cat(std::string name,int age):mName{std::move(name)},mAge{age}{};
@@ -12,12 +15,14 @@ class Cat{
     private:
         std::string mName;
         int mAge;
-}
+};
 
 bool operator== (const Cat& lhs, const Cat& rhs){
     return lhs.getName() == rhs.getName() && lhs.getAge() == rhs.getAge()
 }
 
+//std::sort의 기본 오퍼레이터는 < 임 !!
+//그래서 cat객체같은애는 int가 아니라서 operator< 를 정의해줘야 std::sort가 작동함
 bool operator< (const Cat& lhs, const Cat& rhs){
     if(lhs.getAge() > rhs.getAge()){
         return 1;
@@ -30,12 +35,13 @@ bool operator< (const Cat& lhs, const Cat& rhs){
 std::ostream& operator<<(std::ostream& os,const Cat& c){
     return os<<c.getAge()<<" "<<c.getName();
 }
+
 int main(){
     Cat kitty{"kitty",1};
     Cat nabi{"nabi",2};
 
     kitty == nabi;
-    kitty > nabi;
+    kitty < nabi;
     
     std::vector<Cat> cats;
     std::sort(cats.begin(),cats.end()); 
