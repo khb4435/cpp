@@ -14,11 +14,11 @@ class Cat{
         int mAge;
 }
 
-bool operator==(const Cat& lhs, const Cat& rhs){
+bool operator== (const Cat& lhs, const Cat& rhs){
     return lhs.getName() == rhs.getName() && lhs.getAge() == rhs.getAge()
 }
 
-bool operator<(const Cat& lhs, const Cat& rhs){
+bool operator< (const Cat& lhs, const Cat& rhs){
     if(lhs.getAge() > rhs.getAge()){
         return 1;
     }
