@@ -2,10 +2,11 @@
 #include <thread>
 #include <string>
 
-//1.쓰레드 아규먼트
+//쓰레드 아규먼트
 
-//copy말고 ref로 아규먼트 던질때
+///////////////////////////////////////////copy말고 ref로 아규먼트 던질때
 //void fn(int a,std::string s){
+
 void fn(int a,std::string &s){    
     std::cout<<a<<" "<<s<<std::endl;
 }
@@ -19,8 +20,8 @@ int main(){
 }
 
 
-//2.
-//아무 문제 없지만
+
+/////////////////////////////////////////아무 문제 없지만(쓰레드아님)
 void fn(int &a){    
     std::cout<<a<<std::endl; //42출력
 }
@@ -34,7 +35,7 @@ int main(){
 }
 
 
-//문제 생김
+/////////////////////////////////////////////////////////////문제 생김
 void fn(int &a){    
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout<<a<<std::endl; //32764 출력
@@ -51,7 +52,7 @@ int main(){
     t1.join();
 }
 
-//이러한 문제때문에 쓰레드는 같은 스코프내에서 join해주는것이 안전하다.
+////////////////////////////////이러한 문제때문에 쓰레드는 같은 스코프내에서 join해주는것이 안전하다.
 void fn(int &a){    
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout<<a<<std::endl; //32764 출력
