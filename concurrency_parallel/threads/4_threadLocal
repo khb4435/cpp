@@ -1,15 +1,14 @@
 #include <iostream>
 #include <thread>
 
-//thread local은 global,static같은 기능을 하는데
+//thread_local은 global,static같은 기능을 하는데
 //global,static이 프로세스 전체에 대한 라이프 사이클을 갖고 있다면 얘는 쓰레드에 대한 라이프 싸이클을 갖는다.
-즉 쓰레드별로 사용하고 싶은 static같은 변수가 필요할 때 사용한다.
+//즉 쓰레드별로 사용하고 싶은 static같은 변수가 필요할 때 사용한다.
 
 int globalNum=0;
 thread_local int tlNum=0; //쓰레드함수 바로 위에 만들어지는데 이 초깃값으로 만들어진다.
 
 void fn(){
-    int fnNum=2;
     std::cout<<"globalNum: "<<globalNum<<std::endl;
     std::cout<<"thLocalNum: "<<tlNum<<std::endl;
 
@@ -19,27 +18,20 @@ void fn(){
 
 int main(){
     using namespace std::chrono_literals;
-    int mainNum=1;
-    std::thread t1(fn);
+    std::thread t1(fn); // 0,0
     std::this_thread::sleep_for(1s);
-    std::thread t2(fn);
+    std::thread t2(fn); //1,0
 
     t1.join();
     t2.join();
 }
-/*
-globalNum:0
-thLocalNum:0
-globalNum:1
-thLocalNum:0
-*/
 
-//threadLocal변수는 전역변수위치가 아니라 내부에 있어도 된다.
+
+/////////////////////threadLocal변수는 전역변수위치가 아니라 내부에 있어도 된다.
 void fn(){
-    static int globalNum=0;
-    thread_local int tlNum=0;
-    
-    int fnNum=2;
+    static int globalNum=0; //안으로 들어옴
+    thread_local int tlNum=0;//안으로 들어옴
+
     std::cout<<"globalNum: "<<globalNum<<std::endl;
     std::cout<<"thLocalNum: "<<tlNum<<std::endl;
 
@@ -49,10 +41,10 @@ void fn(){
 
 int main(){
     using namespace std::chrono_literals;
-    int mainNum=1;
-    std::thread t1(fn);
+
+    std::thread t1(fn); // 0, 0
     std::this_thread::sleep_for(1s);
-    std::thread t2(fn);
+    std::thread t2(fn); //1, 0
 
     t1.join();
     t2.join();
