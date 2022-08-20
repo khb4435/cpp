@@ -33,6 +33,8 @@ void caller(){
 int main(){
     caller();
 }
+//안녕하세요. 질문하신 코드는 function call stack이 main, caller,fn으로 넘어가기때문에
+//fn 호출시 caller가 사라지지 않습니다.
 
 
 /////////////////////////////////////////////////////////////문제 생김
