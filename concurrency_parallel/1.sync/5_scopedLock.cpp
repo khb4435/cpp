@@ -2,8 +2,8 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
-//결론: 1개 lock? std::lock_guard
-//2개 이상 lock? std::scoped_lock
+//결론: 1개 mutex lock? std::lock_guard
+//2개 이상의 mutex lock? std::scoped_lock
 //둘다 스코프단위로 lock, unlock
 
 std::mutex mtxA;
