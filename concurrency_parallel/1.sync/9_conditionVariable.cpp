@@ -87,6 +87,7 @@ void waitFn(){
     std::unique_lock<std::mutex>lck(mtx);
     cv.wait(lck,[]{return readyFlag;}); //true일때만 wait풀린다. 
     //critical section
+    lck.unlock();
     std::cout<<"re run"<<std::endl;
 }
 
