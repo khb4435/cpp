@@ -2,6 +2,10 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
+
+//결론 : lock_guard -> mutex.unlock을 스코프 벗어나면
+//자동적으로 해 준다.
+
 struct MInt{ //struct, class 비슷
     std::mutex mtx;
     int num = 0;
