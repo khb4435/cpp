@@ -68,8 +68,13 @@ void plus1(MInt &mi){
     {
         const std::lock_guard<std::mutex> lock(mi.mtx);
         //자동적으로 해당아래부분이 critical section으로 지정되면서
-        //해당 스코프가 끝나면서 mutex가 해제된다
-        mi.num++;
+        //해당 스코프가 끝나면서 mutex가 해제된다.
+        for(int i=0;i<100;i++){
+            if(mi.num == 10){
+                return;
+            }
+            mi.num++;
+        }
     }
 }
 
