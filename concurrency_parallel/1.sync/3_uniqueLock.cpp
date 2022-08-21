@@ -35,6 +35,8 @@ int main(){
 }
 
 ////////////////////////////////////////////////
+//std::unique_lock의 move쓰임새
+
 struct MInt{ //struct, class 비슷
     std::mutex mtx;
     int num = 0;
@@ -50,6 +52,7 @@ std::unique_lock<std::mutex> unlockTest(std::unique_lock<std::mutex>lck){
 void plus1(MInt &mi){
     std::unique_lock<std::mutex> lock(mi.mtx);
     mi.num++;
+    
     //오직 rvalue만 가능하기에 move로 rvalue로 바꾼다.
     lock = unlockTest(std::move(lock));
     //결과적으로 plus1의 unique_lock을 다른 함수로 보낼 수 있음
