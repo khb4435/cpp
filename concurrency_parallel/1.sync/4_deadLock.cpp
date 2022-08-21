@@ -22,6 +22,7 @@ int main(){
 
 
 ////////////////////////////////
+//deadlock예시2
 
 std::mutex mtx;
 
@@ -41,7 +42,7 @@ int main(){
 }
 
 ///////////////////////////
-//std::recursive_lock : lock된 mutex에 block없이 self lock 걸어줄 수 있음
+//std::recursive_mutex : lock된 mutex에 block없이 self lock 걸어줄 수 있음
 
 std::recursive_mutex mtx;
 
@@ -109,7 +110,7 @@ void ba(){
 //그래서 계속 deadlock발생
 //해결방법은 mutex를 언제나 같은 순서대로 걸어준다.
 //문제는 뮤텍스가 여러개면 그 순서를 기억하면서 코딩하기가 참 어렵다
-//해결법:-->std::scoped lock
+//해결법:-->std::scoped_lock
 int main(){
     std::thread t1(ab);
     std::thread t2(ba);
