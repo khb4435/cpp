@@ -14,4 +14,102 @@ Complex Complex::operator+(const Complex& c) const {
   Complex temp(real + c.real, img + c.img);
   return temp;
 }
-Complex Comp
+Complex Complex::operator-(const Complex& c) const {
+  Complex temp(real - c.real, img - c.img);
+  return temp;
+}
+Complex Complex::operator*(const Complex& c) const {
+  Complex temp(real * c.real - img * c.img, real * c.img + img * c.real);
+  return temp;
+}
+Complex Complex::operator/(const Complex& c) const {
+  Complex temp(
+    (real * c.real + img * c.img) / (c.real * c.real + c.img * c.img),
+    (img * c.real - real * c.img) / (c.real * c.real + c.img * c.img));
+  return temp;
+}
+
+Complex c = a * b;
+
+-------------------------------------------------
+간혹가다,
+Complex& operator+(const Complex& c) {
+  real += c.real;
+  img += c.img;
+  return *this;
+}
+
+Complex a = b + c + b;
+아마도 위 문장을 쓴 사람 입장에서는 결과적으로 a = 2 * b + c; 를 의도하였을 것입니다.
+하지만, 실제로 처리되는 것을 보자면, (b.plus(c)).plus(b) 가 되는데, 
+b.plus(c) 를 하면서 b 에는 (b + c) 가 들어가고, 거기에 다시 plus(b) 를 하게 된다면 값 자체만 보자면 
+(b + c) + (b + c) 가 되서 (왜냐하면 현재 b 에는 b + c 가 들어가 있으니까) a = 2 * b + 2 * c 가 되기 때문입니다. 
+이러한 문제를 막기 위해서는 반드시 사칙 연산의 경우 반드시 값을 리턴해야 만 합니다.
+
+-----------------------------------------------------------------------------
+Complex& Complex::operator=(const Complex& c)
+{
+  real = c.real;
+  img = c.img;
+  return *this;
+}
+기본적으로 대입 연산자 함수는, 기존의 사칙연산 연산자 함수르게, 자기 자신을 가리키는 레퍼런스 (Complex&) 을 리턴합니다.
+a = b = c;
+위와 같은 코드에서 b = c; 가 b 를 리턴해야지, a = b; 가 성공적으로 수행될 수 있기 때문이죠.
+이 때 Complex 타입을 리턴하지 않고 굳이 Complex& 타입을 리턴하냐면, 
+대입 연산 이후에 불필요한 복사를 방지하기 위해서 입니다.
+----------------------------------------
+한 가지 재미있는 사실은 굳이 operator= 를 만들지 않더라도, 위 소스를 컴파일 하면 잘 작동한다는 점입니다. 이는 컴파일러 차원에서 디폴트 대입 연산자(default assignment operator)를 
+지원하고 있기 때문인데, 이전에 복사 생성자를 다룰 때 디폴트 복사 생성자가 있었던 것과 일맥상통합니다.
+디폴트 복사 생성자와 마찬가지로 디폴트 대입 연산자 역시 얕은 복사를 수행합니다. 따라서, 깊은 복사가 필요한 클래스의 경우 
+(예를 들어, 클래스 내부적으로 동적으로 할당되는 메모리를 관리하는 포인터가 있다던지) 대입 연산자 함수를 꼭 만들어주어야 할 필요가 있습니다.
+-----------------------------------------------
+이제 여러분은 다음 두 문장의 차이를 완벽히 이해 하실 수 있을 것이라 믿습니다.
+Some_Class a = b;  // ①
+와
+Some_Class a;  // ②
+a = b;
+① 의 경우, 아예 a 의 '복사 생성자' 가 호출되는 것이고, ② 의 경우 a 의 그냥 기본 생성자가 호출 된 다음, 
+다음 문장에서 대입 연산자 함수가 실행되는 것입니다. 위 두 문장은 비록 비슷해 보이기는 해도 아예 다른 것이지요.
+-----------------------------------------------------------------
+<<operator+=>>
+Complex& Complex::operator+=(const Complex& c) {
+  (*this) = (*this) + c;
+  return *this;
+}
+Complex& Complex::operator-=(const Complex& c) {
+  (*this) = (*this) - c;
+  return *this;
+}
+Complex& Complex::operator*=(const Complex& c) {
+  (*this) = (*this) * c;
+  return *this;
+}
+Complex& Complex::operator/=(const Complex& c) {
+  (*this) = (*this) / c;
+  return *this;
+}
+-----------------------------------------------------------------
+a = a + "-1.1 + i3.923";
+와 같은 문장을 사용하였을 때, 앞에서 이야기 해왔듯이 컴파일러가 위 문장을
+a = a.operator+("-1.1 + i3.923");
+로 바꿔줍니다. 하지만, 우리에게는 operator+(const char *str) 이 없고, operator+(const Complex& c) 밖에 없기 때문에 
+직접적으로 오버로딩 되지는 않습니다. 그렇지만, 컴파일러는 매우 똑똑하기 때문에 그 다음 순위로 오버로딩 될 수 있는 
+함수들이 있는지 없는 지 확인해봅니다. 그런데 놀랍게도, 우리에게는 Complex(const char* str);
+가 있기 때문에 컴파일러는 문자열 리터럴로 부터 const Complex 타입의 객체를 새롭게 생성할 수 있게 된다는 것입니다.
+ 즉, 위 문장은 은 다음과 같이 변환됩니다.(("기본생성자는 변환생성자로 사용될 수 있음"))
+a = a.operator+(Complex("-1.1 + i3.923"));
+그럼 이제 const Complex 에 인자로 전달할 수 있게 되어서 제대로 프로그램이 작동을 하게 되지요. 
+여기서 한 가지 짚고 넘어가야 할 점은, 만일 우리가 operator+ 함수의 인자가 const Complex& c 가 아니라 
+그냥 Complex& c 로 받도록 하였다면 위와 같은 변환은 이루어지지 않습니다. 
+왜냐하면 -1.1 + i3.923 자체가 문자열 리터럴 이므로, 이를 바탕으로 생성된 객체 역시 상수 여야 하기 때문입니다. 
+따라서 여러 모로 함수 인자의 값을 변형하지 않는다고 확신이 들면 무조건 const 인자로 받도록 하는 것이 좋습니다.
+---------------------------------------------------------------------
+하지만 문제는 다음과 같은 문장은 실행이 될 까요?
+a = "-1.1 + i3.923" + a;
+사실 이 문장이나, 원래의
+a = a + "-1.1 + i3.923";
+문장이나 정확히 동일한 식입니다. 왜냐하면 + 연산자는 교환 법칙이 성립해야만 하기 때문이죠. 
+하지만 여러분도 이미 짐작하셨겠지만 전자의 경우에는 성공적으로 컴파일 되지 않습니다. 
+왜냐하면 a + "-1.1+i3.923" 의 경우 이 문장이 a.operator+("-1.1+i3.923") 으로 변환되어서 정확히 수행될 수 있지만 
+"-1.1 + i3.923" + a 의 경우에는 이 같은 변환이 불가능 하기 때문입니다.
