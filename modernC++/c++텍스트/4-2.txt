@@ -1,0 +1,10 @@
+Date(){ ~ }
+Date day = Date(); //명시적방법(explicit) 
+Date day; // 암시적방법 (implicit)
+
+Date(int year, int month, int day) { ~ }
+Date day = Date(2012, 3, 1);  // 명시적 방법 (explicit)
+Date day(2011, 3, 1);         // 암시적 방법 (implicit)
+
+절대로 인자가 없는 생성자를 호출하기 위해서 A a() 처럼 하면 안됩니다. 
+해당 문장은 A 를 리턴하는 함수 a 를 정의한 문장 입니다. 반드시 그냥 A a 와 같이 써야 합니다.
