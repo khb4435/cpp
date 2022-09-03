@@ -1,0 +1,150 @@
+1.소멸자를 virtual로
+2.레퍼런스도 된다.
+#include <iostream>
+
+class A {
+ public:
+  virtual void show() { std::cout << "Parent !" << std::endl; }
+};
+class B : public A {
+ public:
+  void show() override { std::cout << "Child!" << std::endl; }
+};
+
+void test(A& a) { a.show(); }
+
+int main() {
+  A a;
+  B b;
+  test(a);
+  test(b);
+
+  return 0;
+}
+
+3.순수가상함수와 추상클래스
+#include <iostream>
+
+class Animal {
+ public:
+  Animal() {}
+  virtual ~Animal() {}
+  virtual void speak() = 0; //"무엇을 하는지 정의되어 있지 않는 함수" 입니다. 다시 말해 이 함수는 반드시 오버라이딩 되어야만 하는 함수 이지요.
+//반드시 오버라이딩 되도록 만든 함수를 완전한 가상 함수라 해서, 순수 가상 함수(pure virtual function)라고 부릅니다.
+//당연하게도, 순수 가상 함수는 본체가 없기 때문에, 이 함수를 호출하는 것은 불가능합니다. 그렇기 때문에, Animal 객체를 생성하는것 또한 불가능입니다.
+};
+//따라서 Animal 처럼,순수 가상 함수를 최소 한 개 이상 포함하고 있는 클래스는 객체를 생성할 수 없으며, 
+인스턴스화 시키기 위해서는 이 클래스를 상속 받는 클래스를 만들어서 모든 순수 가상 함수를 오버라이딩 해주어야만 합니다.
+이렇게 순수 가상 함수를 최소 한개 포함하고 있는- 반드시 상속 되어야 하는 클래스를 가리켜 추상 클래스 (abstract class)라고 부릅니다
+
+class Dog : public Animal {
+ public:
+  Dog() : Animal() {}
+  void speak() override { std::cout << "왈왈" << std::endl; }
+//위 처럼 speak() 를 오버라이딩 함으로써 (정확히 말하면 Animal 의 모든 순수 가상 함수를 오버라이딩 함으로써) Dog 클래스의 객체를 생성할 수 있게 됩니다. 
+Cat 클래스도 마찬가지 이지요.
+};
+
+class Cat : public Animal {
+ public:
+  Cat() : Animal() {}
+  void speak() override { std::cout << "야옹야옹" << std::endl; }
+};
+
+int main() {
+  Animal* dog = new Dog();
+  Animal* cat = new Cat();
+
+  dog->speak();
+  cat->speak();
+}
+//그렇다면 추상 클래스를 도대체 왜 사용하는 것일까요?
+추상 클래스 자체로는 인스턴스화 시킬 수 도 없고 (추상 클래스의 객체를 만들 수 없다) 사용하기 위해서는 반드시 다른 누구가 상속 해줘야만 하기 때문이지요. 
+하지만, 추상 클래스를 '설계도' 라고 생각하면 좋습니다.
+즉, 이 클래스를 상속받아서 사용하는 사람에게 "이 기능은 일반적인 상황에서 만들기 힘드니 너가 직접 특수화 되는 클래스에 맞추어서 만들어서 써라." 라고 말해주는 것이지요. 
+동물들이 소리를 내는 것은 맞으므로 Animal 클래스에 speak 함수가 필요합니다. 
+하지만 어떤 소리를 내는지는 동물 마다 다르기 때문에 speak 함수를 가상 함수로 만들기는 불가능 합니다. 
+따라서 speak 함수를 순수 가상 함수로 만들게 되면 모든 Animal 들은 speak() 한다라는 의미 전달과 함께, 
+사용자가 Animal 클래스를 상속 받아서 (위 경우 Dog 와 Cat) speak() 를 상황에 맞게 구현하면 됩니다.
+
+추상 클래스의 또 한가지 특징은 비록 객체는 생성할 수 없지만, 추상 클래스를 가리키는 포인터는 문제 없이 만들 수 있다는 점입니다. 
+위 예에서도 살펴보았듯이, 아무런 문제 없이 Animal* 의 변수를 생성하였습니다.
+
+Animal* dog = new Dog();
+Animal* cat = new Cat();
+
+dog->speak();
+cat->speak();
+
+——————————————————————
+<다중상속>
+class A {
+ public:
+  int a;
+};
+
+class B {
+ public:
+  int b;
+};
+
+class C : public A, public B {
+ public:
+  int c;
+};
+
+단순히 그냥 A 와 B 의 내용이 모두 C 에 들어간다고 생각하시면 됩니다. 따라서;
+
+C c;
+c.a = 3;
+c.b = 2;
+c.c = 4;
+와 같은 것이 가능하게 되는 것이지요. 다중 상속에서 한 가지 재미있는 점은 생성자들의 호출 순서 입니다. 
+위 처럼 A -> B -> C 순으로 호출됨을 알 수 있습니다. 그렇다면 이번에는,
+
+class C : public A, public B
+에서
+class C : public B, public A
+B->A->C순으로 생성자 생성
+
+——————————————————————
+<다중상속의 주의할 점>
+class A {
+ public:
+  int a;
+};
+
+class B {
+ public:
+  int a;
+};
+
+class C : public B, public A {
+ public:
+  int c;
+};
+
+int main() {
+  C c;
+  c.a = 3;
+}
+그렇다면 만일 클래스 C 의 객체를 생성해서, 위 처럼 중복되는 멤버 변수에 접근한다면;
+위 처럼 B 의 a 인지, A 의 a 인지 구분할 수 없다는 오류를 발생하게 됩니다. 
+마찬가지로, 클래스 A 와 B 에 같은 이름의 함수가 있다면 똑같이 어떤 함수를 호출해야 될 지 구분할 수 없겠지요.
+
+<다이아몬드상속>
+class Human {
+ public:
+  // ...
+};
+class HandsomeHuman : public virtual Human {
+  // ...
+};
+class SmartHuman : public virtual Human {
+  // ...
+};
+class Me : public HandsomeHuman, public SmartHuman {
+  // ...
+};
+이러한 형태로 Human 을 virtual 로 상속 받는다면, Me 에서 다중 상속 시에도, 컴파일러가 언제나 Human 을 한 번만 포함하도록 지정할 수 있게 됩니다. 
+참고로, 가상 상속 시에, Me 의 생성자에서 HandsomeHuman 과 SmartHuman 의 생성자를 호출함은 당연하고, Human 의 생성자 또한 호출해주어야만 합니다. 
