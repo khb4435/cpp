@@ -1,0 +1,102 @@
+씹어먹는 C++ - <12 - 1. 우측값 레퍼런스와 이동 생성자>
+A c( A(2) ) : //일반생성자! + (복사생성자)
+사실 생각해보면 굳이 임시 객체를 한 번 만들고, 이를 복사 생성할 필요가 없습니다. 
+어차피 A(2) 로 똑같이 c 를 만들거면, 차라리 c 자체를 A(2) 로 만들어진 객체로 해버리는 것이랑 똑같기 때문이지요.
+똑똑한 컴파일러는 복사 생성을 굳이 수행하지 않고, 만들어진 임시로 만들어진 A(2) 자체를 c 로 만들어버립니다. 
+이렇게, 컴파일러 자체에서 복사를 생략해 버리는 작업을 복사 생략(copy elision) 이라고 합니다.
+물론 C++ 표준을 읽어보면 반드시 복사 생략을 해라 라는 식이 아니라, 복사 생략을 할 수 도 있다 라는 뜻으로 써 있습니다.
+((C++ 17 부터 일부 경우에 대해서 (예를 들어서 함수 내부에서 객체를 만들어서 return 할 경우) 
+반드시 복사 생략을 해야되는 것으로 바뀌었습니다.
+자세한 내용은 https://en.cppreference.com/w/cpp/language/copy_elision 를 참조해주세요.))
+
+operator+는 리턴값이 lvalue reference가 될 수 없음.
+operator+ 는 MyString& 를 리턴하면 안됩니다. 
+애초에 더해준 문자열을 새로 생성해서 리턴하는 역할을 하고 있기 때문이죠. 
+예를 들어서
+str1 + str2를 하면 str1 이 바뀔것이라 생각하시나요? 아니지요. str1 + str2 는 새로운 합쳐진 문자열을 리턴해야 합니다.
+반면에 myString a;
+a = b;같으면 operator=의 반환값이 레퍼런스가 될 수 있음. 왜냐면 a를 업데이트하기 때문임(a자체반환)
+
+MyString str3 = str1 + str2;
+이 부분에서 두 개의 문자열을 더한 새로운 문자열로 str3 를 생성하고 있습니다.
+
+
+MyString MyString::operator+(const MyString &s) {
+  MyString str;
+  str.reserve(string_length + s.string_length);
+  for (int i = 0; i < string_length; i++)
+    str.string_content[i] = string_content[i];
+  for (int i = 0; i < s.string_length; i++)
+    str.string_content[string_length + i] = s.string_content[i];
+  str.string_length = string_length + s.string_length;
+  return str;
+}
+위 함수가 str1 + str2 를 실행 시에 호출되는데, 먼저 빈 MyString 객체인 str 을 생성합니다. 
+(생성자 호출! 출력됨) 그 후에, reserve 함수를 이용해서 공간을 할당하고, str1 과 str2 를 더한 문자열을 복사하게 됩니다.
+이렇게 리턴된 str 은 str3 을 생성하는데 전달되어서, str3 의 복사 생성자가 호출 됩니다.
+str1+str3가 value(우측값)리턴하는데 복사생성자 붙은이유? 인자로(const MyString &a);인꼴이라서.
+하지만, 이미 예상했겠지만, 굳이 str3 의 복사 생성자를 또 호출할 필요가 없습니다. 
+왜냐하면, 어차피 똑같이 복사해서 생성할 것이면, 
+이미 생성된 (str1 + str2) 가 리턴한 객체를 str3 셈 치고 사용하면 되기 때문이지요. 
+이전의 예제에서는 컴파일러가 불필요한 복사 생성자 호출을 복사 생략을 통해 수행하지 않았지만, 
+이 예제의 경우, 컴파일러가 복사 생략 최적화를 수행하지 않았습니다.
+
+MyString str3 = str1 + str2에서
+만약에 str1 과 str2 의 크기가 엄청 컸다면 어떨까요? 쓸데 없는 복사를 두 번 하는데 상당한 자원이 소모될 것입니다.
+그렇다면 이러한 문제를 C++ 에서는 어떠한 방식으로 해결하고 있을까요?
+--> 이동 생성자 등장!
+간단합니다. 
+str3 생성 시에 임시로 생성된 객체의 string_content 가리키는 문자열의 주소값을 str3 의 string_content 로 해주면 됩니다.
+문제는 이렇게 하게 되면, 임시 객체가 소멸 시에 string_content 를 메모리에서 해제하게 되는데, 
+그렇게 되면 str3 가 가리키고 있던 문자열이 메모리에서 소멸되게 됩니다. 
+따라서 이를 방지 하기 위해서는, 임시 생성된 객체의 string_content 를 nullptr 로 바꿔주고, 
+소멸자에서 string_content 가 nullptr 이면 소멸하지 않도록 해주면 됩니다. 
+하지만, 이 방법은 기존의 복사 생성자에서 사용할 수 없습니다. 
+왜냐하면 우리는 인자를 const MyString& 으로 받았기 때문에, 인자의 값을 변경할 수 없게 되지요.
+이와 같은 문제가 발생한 이유는 const MyString& 이 좌측값과 우측값 모두 받을 수 있다는 점에서 비롯되었습니다. 
+그렇다면, 좌측값 말고 우측값만 특이적으로 받을 수 있는 방법은 없을까요? 
+바로 C++ 11 부터 제공하는 우측값 레퍼런스를 이용하면 됩니다. 
+
+MyString::MyString(MyString&& str) {
+  std::cout << "이동 생성자 호출 !" << std::endl;
+  string_length = str.string_length;
+  string_content = str.string_content; //같은부분포인팅
+  memory_capacity = str.memory_capacity;
+
+  // 임시 객체 소멸 시에 메모리를 해제하지
+  // 못하게 한다.
+  str.string_content = nullptr;
+}
+
+MyString::~MyString() {
+  if (string_content) delete[] string_content;
+}
+
+우측값 레퍼런스의 재미있는 특징으로 레퍼런스 하는 임시 객체가 소멸되지 않도록 붙들고 있는다는 점입니다. 예를 들어서,
+MyString&& str3 = str1 + str2;
+str3.println();
+의 경우 str3 이 str1 + str2 에서 리턴되는 임시 객체의 레퍼런스가 되면서 그 임시 객체가 소멸되지 않도록 합니다. 
+실제로, 아래 println 함수에서 더해진 문자열이 잘 보여집니다.
+
+--------------------------------
+우측값 레퍼런스를 사용한 이동생성자 : 함수이름(myString&& str)
+여기서 str자체는 좌측값, str는 재사용될 수 있다. 
+
+주의할 점!
+이동생성자를 반드시 noexcept로 명시한다. 
+복사생성은 예외상황 발생시 새로 할당한 메모리 소멸시켜도 기존의 메모리에 원소가 존재하기 때문에 상관없지만
+이동생성의 경우 기존메모리들이 모두 이동되어 사라져버렸기 때문에 
+
+int&& b = 3; 을 한 뒤에 b = 2; 와 같은 것이 가능합니다. 물론 큰 의미는 없습니다. 
+
+Mystring&& str3 = str1 + str2;
+MyString str3 = str1 + str2;
+위 코드에 대해서는 어떠한 차이점이 있는지 궁금합니다.
+만약에 컴파일러가 복사 생략(copy elision)을 하지 않는 경우 
+첫 번째 경우에는 그냥 str3 가 str1+str2 를 통해서 생성된 임시 객체를 가리키게 되고
+두 번째 경우에는 str3 가 str1+str2 를 통해서 생성된 임시 객체를 **이동 생성** 
+(이동 생성자가 없다면 복사 생성자를 호출하겠죠) 하게 됩니다.
+하지만 최근 컴파일러들은 복사 생략을 하기 때문에 아래 경우 역시 그냥 str3 가 str1+str2 가 생성한 객체를 나타내기 때문에 
+불필요한 생성자 호출이 없게 됩니다.
+
+네 int 같은 애들은 이동 생성이 의미가 없습니다. 
