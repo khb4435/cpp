@@ -1,0 +1,71 @@
+Marine* marines[100]; //Marine*형의 크기가 100인 배열
+marines[0] = new Marine(2, 3);
+marines[1] = new Marine(3, 5);
+//new 의 경우 객체를 동적으로 생성하면서와 동시에 자동으로 생성자도 호출해준다
+marines[0]->show_status();
+marines[1]->show_status();
+
+delete marines[0];
+delete marines[1];
+
+
+
+//클래스 변수에 포인터 추가되었다.
+Marine::~Marine() {
+  std::cout << name << " 의 소멸자 호출 ! " << std::endl;
+  if (name != NULL) {
+    delete[] name;
+  }
+}
+소멸자가 하는 가장 흔한 역할은 위에서도 나타나 있지만, 객체가 동적으로 할당받은 메모리를 해제하는 일이라고 볼 수 있습니다. 
+그 외에도 (아직 배우진 않았지만) 쓰레드 사이에서 lock 된 것을 푸는 역할이라던지 등의 역할을 수행하게 됩니다.
+참고로 우리가 따로 생성자를 정의하지 않더라도 "디폴트 생성자"가 있었던 것 처럼, 
+소멸자도 "디폴트 소멸자"(Default Destructor)가 있습니다. 
+물론, 디폴트 소멸자 내부에선 아무런 작업도 수행하지 않습니다. 
+만일 소멸자가 필요 없는 클래스(일반 변수로만 구성된?)라면 굳이 소멸자를 따로 써줄 필요는 없습니다.
+
+Photon_Cannon::Photon_Cannon( const Photon_Cannon& pc ) { //복사생성자 정의
+여기서 a 가 const 이기 때문에 우리는 복사 생성자 내부에서 a 의 데이터를 변경할 수 없고, 
+오직 새롭게 초기화 되는 인스턴스 변수들에게 '복사' 만 할 수 있게 됩니다. 
+  std::cout << "복사 생성자 호출 !" << std::endl;
+  hp = pc.hp;
+  shield = pc.shield;
+  coord_x = pc.coord_x;
+  coord_y = pc.coord_y;
+  damage = pc.damage;
+}
+
+Photon_Cannon::Photon_Cannon(int x, int y) {
+  std::cout << "일반 생성자 호출 !" << std::endl;
+  hp = shield = 100;
+  coord_x = x;
+  coord_y = y;
+  damage = 20;
+}
+
+
+//디폴트 복사생성자의 한계 -> 얉은복사
+Photon_Cannon::Photon_Cannon(const Photon_Cannon& pc) {
+  hp = pc.hp;
+  shield = pc.shield;
+  coord_x = pc.coord_x;
+  coord_y = pc.coord_y;
+  damage = pc.damage;
+  name = pc.name; //같은 공간을 포인팅하게된다.
+}
+문제는 소멸자에서 일어납니다.
+main 함수가 종료되기 직전에 생성되었던 객체들은 파괴되면서 소멸자를 호출하게 되죠. 
+만일 먼저 pc1 이 파괴되었다고 해봅시다.
+그런데 문제는 pc2 의 name 이 해제된 메모리인 0x125ADD3 을 가리키고 있다는 것입니다.
+
+//소멸자
+Photon_Cannon::~Photon_Cannon() {
+  if (name) delete[] name;
+}
+pc2 에서 일단 name 은 NULL 이 아니므로 (0x125ADD3 이라는 주소값을 가지고 있음) delete [] name 이 수행되고, 
+이미 해제된 메모리에 접근해서 다시 해제하려고 하였기 때문에 (사실 접근한 것 자체만으로 오류) 
+위 그림과 같이 무서운 런타임 오류가 발생하게 됩니다.
+그 답은 간단합니다. 복사 생성자에서 name 을 그대로 복사하지 말고 따로 다른 메모리에 동적 할당을 해서 
+그 내용만 복사하면 되겠지요?이렇게 메모리를 새로 할당해서 내용을 복사하는 것을 깊은 복사(deep copy) 라고 부르며 
+컴파일러가 생성하는 디폴트 복사 생성자의 경우 얕은 복사 밖에 할 수 없으므로 위와 같이 깊은 복사가 필요한 경우에는
+ 사용자가 직접 복사 생성자를 만들어야 합니다.
