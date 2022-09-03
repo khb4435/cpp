@@ -1,0 +1,89 @@
+Derived c;
+Base* p_c = &c; // 업케스팅 문제없음
+p_c는 Base를 가리키는 포인터이므로  Derived객체의 Base에 해당하는 정보밖에 볼 수 없음.
+p 는 엄연한 Base 객체를 가리키는 포인터 입니다. 따라서, p 의 what 을 실행한다면 p 는 당연히 '아 Base 의 what 을 실행해 주어야 겠구나' 하고, Base 의 what 을 실행해서, Base 의 what 은 Base 의 s 를 출력 하게 됩니다. 따라서 위 처럼 '기반' 가 출력됩니다.
+
+——————————————————————
+
+Base p;
+Derived c;
+Derived* p_p = &p; //다운캐스팅 -> 문제있음 형변환 해야함
+p_p->what(); //Derived 의 what 함수가 호출되어야만 하는데, 이는 불가능 합니다. (왜냐하면 p_p 가 가리키는 객체는 Base 객체 이므로 Derived 에 대한 정보가 없습니다). 따라서, 이와 같은 문제를 막기 위해서 컴파일러 상에서 함부로 다운 캐스팅 하는 것을 금지하고 있습니다.
+
+——————————————————————
+
+Base p;
+Derived c;
+Base* p_p = &c; //업캐스팅 ok
+Derived* p_c = p_p; 
+//Derived* p_c = static_cast<Derived*>(p_p);
+p_c->what();
+
+Derived* p_c 에 Base * 를 대입하면 안된다는 똑같은 오류가 발생합니다. 하지만 우리는 p_p 가 가리키는 것이 Base 객체가 아니라 Derived 객체라는 사실을 알고 있습니다. 그렇기 때문에 비록 Base * 포인터를 다운 캐스팅 함에도 불구하고 p_p 가 실제로는 Derived 객체를 가리키기 때문에 Derived* p_c = p_p;를 해도 전혀 문제가 없습니다. 이를 위해서는 아래 처럼 강제적으로 타입 변환을 하면 됩니다.
+비록 약간은 위험하지만 (만일 p_p 가 사실은 Derived 객체를 가리키지 않는다면?) 컴파일 오류를 발생시키지 않고 성공적으로 컴파일 할 수 있습니다. 그렇다면 만일 p_p 가 사실 Base 객체를 가리키는데 강제적으로 타입 변환을 해서 what 을 실행한다면 어떨까요?
+런타임 오류가 발생하게 됩니다.
+이러한 강제적으로 다운 캐스팅을 하는 경우, 컴파일 타임에서 오류를 찾아내기 매우 힘들기 때문에 다운 캐스팅은 작동이 보장되지 않는 한 매우매우 권장하지 않는 바입니다.
+
+——————————————————————
+
+이러한 캐스팅에 따른 오류를 미연에 방지하기 위해서, C++ 에서는 상속 관계에 있는 두 포인터들 간에 캐스팅을 해주는 dynamic_cast 라는 것을 지원합니다. 이를 사용하는 방법은 static_cast 와 거의 동일합니다.
+
+Derived* p_c = dyanmic_cast<Derived*>(p_p);
+
+——————————————————————
+
+<virtual 키워드>
+Base* p_c = &c;
+Base* p_p = &p;
+
+std::cout << " == 실제 객체는 Base == " << std::endl;
+p_p->what();
+
+std::cout << " == 실제 객체는 Derived == " << std::endl;
+p_c->what();
+분명히 여기서 p_p 와 p_c 모두 Base 객체를 가리키는 포인터 입니다. 따라서, p_p->what() 와 p_c->what() 을 하면 모두 Base 객체의 what() 함수가 실행되서 둘 다 '기반' 라고 출력이 되어야만 했습니다.
+그런데, 놀랍게도, 실제 p_p 와 p_c 가 무엇과 결합해 있는지 아는 것 처럼 (p_p 는 Base 객체를 가리키고, p_c 는 Derived 객체를 가리킴) 이에 따른 적절한 what 함수를 호출해준 것입니다.
+이와 같은 일이 가능해진 이유는 바로;
+
+class Base {
+ public:
+  Base() { std::cout << "기반 클래스" << std::endl; }
+  virtual void what() { std::cout << "기반 클래스의 what()" << std::endl; }
+};
+이 virtual 키워드 하나 때문입니다. 이 virtual 키워드는, 다음과 같은 역할을 합니다.
+위 코드를 실행시에 (런타임), 컴퓨터 입장에서;
+"흠, p_c 는 Base 포인터니까 Base 의 what() 을 실행해야지"
+"어 근데 what 이 virtual 이네?"
+
+"잠깐. 이거 실제 Base 객체 맞어? 아니네 Derived 객체네"
+"그럼 Derived 의 what 을 실행해야지"
+이렇게 컴파일 시에 어떤 함수가 실행될 지 정해지지 않고 런타임 시에 정해지는 일을 가리켜서 동적 바인딩(dynamic binding) 이라고 부릅니다. 즉,
+p_c->what();
+에서 Derived 의 what 을 실행할지, Base 의 what 을 실행하지 결정은 런타임에 이루어지게 됩니다.
+물론 동적 바인딩의 반대말로 정적 바인딩(static binding) 이란 말도 있습니다. 이는 컴파일 타임에 어떤 함수가 호출될 지 정해지는 것으로 여태까지 여러분이 알고 오셨던 함수에 해당합니다.
+덧붙여서, virtual 키워드가 붙은 함수를 가상 함수(virtual function) 라고 부릅니다. 이렇게 파생 클래스의 함수가 기반 클래스의 함수를 오버라이드 하기 위해서는 두 함수의 꼴이 정확히 같아야 합니다.
+
+——————————————————————
+
+<override 키워드 : 오버라이딩 되는 함수라고 명시적으로 알려준다.>
+#include <iostream>
+#include <string>
+
+class Base {
+  std::string s;
+
+ public:
+  Base() : s("기반") { std::cout << "기반 클래스" << std::endl; }
+
+  virtual void incorrect() { std::cout << "기반 클래스 " << std::endl; }
+};
+
+class Derived : public Base {
+  std::string s;
+
+ public:
+  Derived() : Base(), s("파생") {}
+
+  void incorrect() override { std::cout << "파생 클래스 " << std::endl; }
+};
+
