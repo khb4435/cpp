@@ -1,0 +1,17 @@
+연산자 오버로딩 : 결론적으로 레퍼런스리턴은 그 객체자체가 업데이트 필요할 때, 즉, =연산자나 +=같은것들
+이외 사칙연산은 레퍼런스 리턴하면안된다!!
+또 레퍼런스 리턴이라함은 없어질 놈 리턴하면안됨! 그 함수? 생성자가 끝나고 남아있는놈을 레퍼런스 리턴때려야한다.
+
+(리턴 타입) operator(연산자) (연산자가 받는 인자)
+(※ 참고적으로 위 방법 외에는 함수 이름으로 연산자를 절대 넣을 수 없습니다) 
+
+bool MyString::operator==(MyString& str) {
+  return !compare(str);  // str 과 같으면 compare 에서 0 을 리턴한다.
+}
+
+반드시 사칙 연산의 경우 반드시 값을 리턴해야 만 합니다.
+Complex Complex::operator+(const Complex& c) const {
+  Complex temp(real + c.real, img + c.img);
+  return temp;
+}
+Complex Comp
