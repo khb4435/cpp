@@ -40,7 +40,7 @@ default_damage 가 누구의 default_damage 인지 아무도 모르는 상황이
 왜냐하면 앞에서 계속 말해왔듯이 어떤 객체에도 속해이지 않기 때문이니까요!
 
 
-**레퍼런스 리턴 (없어지지 않는놈을 레퍼런스 리턴해줘야한다)
+**레퍼런스 리턴 
 Marine& Marine::be_attacked(int damage_earn) {
   this->hp -= damage_earn;
   if (this->hp <= 0) this->is_dead = true;
