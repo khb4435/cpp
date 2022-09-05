@@ -6,6 +6,7 @@ class A {
  public:
   virtual void show() { std::cout << "Parent !" << std::endl; }
 };
+
 class B : public A {
  public:
   void show() override { std::cout << "Child!" << std::endl; }
@@ -29,13 +30,13 @@ class Animal {
  public:
   Animal() {}
   virtual ~Animal() {}
-  virtual void speak() = 0; //"무엇을 하는지 정의되어 있지 않는 함수" 입니다. 다시 말해 이 함수는 반드시 오버라이딩 되어야만 하는 함수 이지요.
+  virtual void speak() = 0; //"무엇을 하는지 정의되어 있지 않는 함수" 입니다. 다시 말해 이 함수는 "반드시" 오버라이딩 되어야만 하는 함수 이지요.
 //반드시 오버라이딩 되도록 만든 함수를 완전한 가상 함수라 해서, 순수 가상 함수(pure virtual function)라고 부릅니다.
 //당연하게도, 순수 가상 함수는 본체가 없기 때문에, 이 함수를 호출하는 것은 불가능합니다. 그렇기 때문에, Animal 객체를 생성하는것 또한 불가능입니다.
 };
 //따라서 Animal 처럼,순수 가상 함수를 최소 한 개 이상 포함하고 있는 클래스는 객체를 생성할 수 없으며, 
 인스턴스화 시키기 위해서는 이 클래스를 상속 받는 클래스를 만들어서 모든 순수 가상 함수를 오버라이딩 해주어야만 합니다.
-이렇게 순수 가상 함수를 최소 한개 포함하고 있는- 반드시 상속 되어야 하는 클래스를 가리켜 추상 클래스 (abstract class)라고 부릅니다
+이렇게 순수 가상 함수를 최소 한개 포함하고 있는 반드시 상속 되어야 하는 클래스를 가리켜 추상 클래스 (abstract class)라고 부릅니다
 
 class Dog : public Animal {
  public:
@@ -137,10 +138,10 @@ class Human {
  public:
   // ...
 };
-class HandsomeHuman : public virtual Human {
+class HandsomeHuman : public virtual Human { //virtual human
   // ...
 };
-class SmartHuman : public virtual Human {
+class SmartHuman : public virtual Human { //virtual human
   // ...
 };
 class Me : public HandsomeHuman, public SmartHuman {
