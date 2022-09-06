@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  1
-//
-//  Created by 김현배 on 2022/03/20.
-//
-
-
 //C에는 예외처리가 없어서 모든 에러를 리턴으로 해결
 //C++에는 optional,pair,tuple등 error return하는 방법외에도
 //exception(try,catch,throw)가 있음
