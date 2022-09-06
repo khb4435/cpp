@@ -1,12 +1,3 @@
-//
-//  main.cpp
-//  any
-//
-//  Created by 김현배 on 2022/03/01.
-//
-
-
-
 //일단 사용할 일 거의 없음
 //어떤 타입이든 저장함
 //((void*))로 어떤 타입이든간에 접근할 수 있는데 제대로 사용하려면 그 접근된 메모리의 타입을 내가 인식하고 있어야함.
@@ -37,8 +28,8 @@ int main()
     // bad cast
     try //해보기
     {
-        a = 1; //int를 double로 읽음
-        std::cout << std::any_cast<float>(a) << '\n';
+        a = 1; //int
+        std::cout << std::any_cast<float>(a) << '\n';//int를 float로 읽음
     }
     catch (const std::bad_any_cast& e) //당연히 exception던져지며 이부분실행
     {
