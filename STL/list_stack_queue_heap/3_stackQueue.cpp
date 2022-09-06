@@ -1,10 +1,9 @@
-
+//stack : last in first out (바닥있는상자)
 
 #include <iostream>
 #include <queue>
 #include <stack>
 int main(int argc, const char * argv[]) {
-    //stack : last in first out
     std::stack<int> stackNums;
     stackNums.emplace(1);
     stackNums.emplace(3);
@@ -19,7 +18,7 @@ int main(int argc, const char * argv[]) {
 
     std::cout<<"size : "<<stackNums.size()<<std::endl; //0
 
-    //Queue : first in first out
+    //Queue : first in first out (바닥뚫린상자)
     //리스트는 내부구조가 linked list로 구현되어있습니다. 
     //하지만 stack은 더 abstract한 형태로서 그 내부는 끝 부분을 가르킬수있는 vector/deque/list등을 모두 사용해도 됩니다.
     std::queue<int> nums;
