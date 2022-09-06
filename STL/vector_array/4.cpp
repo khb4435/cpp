@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  4
-//
-//  Created by 김현배 on 2022/02/20.
-//
-
 #include <iostream>
 #include <vector>
 #include <string>
