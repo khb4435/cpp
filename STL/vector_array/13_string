@@ -5,28 +5,26 @@ int main(){
     int a =65;
     std::cout<<(char)a<<std::endl; //아스키코드에 대응되는 A출력
 
-    char a[6]={'n','o','c','o','p','e'};
+    char a[6]={'n','o','c','o','p','e'}; //in stack nocope\0
     std::cout<<a<<std::endl; //nocope 출력
 
-    char a[6]={'n','o','\0','o','p','e'};
+    char a[6]={'n','o','\0','o','p','e'};//in stack no\0ope\0
     std::cout<<a<<std::endl; //no 출력
     std::cout<<sizeof(a)<<std::endl; //6
-    std::cout<<strlen(a)<<std::endl; //2 -> \n까지만 길이를잰다
+    std::cout<<strlen(a)<<std::endl; //2 -> \0까지만 길이를잰다
 
-    char a[] = "nocope" 
-    a[1]='h';//가능
-    //char a[]={'n','o','c','o','p','e','\0'}; \0이 추가된것과 마찬가지
-    //스택에 해당 "nocope\0"문자열이 올라온다.
+    char a[] = "nocope"  
+    a[1]='h';//가능,왜냐면 stack영역에 있기때문
     std::cout<<a<<std::endl; //nocope 출력
     std::cout<<sizeof(a)<<std::endl; //7 -> \n을 포함한다.
     std::cout<<strlen(a)<<std::endl; //6
 
-    const char *b = "nocope";
+    const char *b = "nocope"; //in read only
     //b는 스택, nocope\0는 read only영역이기 때문에 const로 하자
-    //b[1]='h' //불가능
+    //b[1]='h' //불가능, read only라서
     std::cout<<b<<std::endl; //nocope 출력
     std::cout<<sizeof(b)<<std::endl; //8 변수b가 포인터로서의 사이즈임
-    std::cout<<strlen(b)<<std::endl; //6
+    std::cout<<strlen(b)<<std::endl; //6 \0까지 출력
 
 
     //마지막으로 string은 클래스이기 때문에 다룰수 있는 멤버함수가 많이 제공되고
@@ -34,7 +32,7 @@ int main(){
     std::string c = "nocope";
     //스택에 c, 힙에 "nocope"
     std::cout<<c<<std::endl; //nocope 출력
-    std::cout<<sizeof(c)<<std::endl; //32
+    std::cout<<sizeof(c)<<std::endl; //32 -> string object의 크기.
     std::cout<<c.size()<<std::endl; //6
 
     //또 string은 \0로 끊어지지 않기 때문에 문자열에 \0문자 넣는것도 가능하다.
