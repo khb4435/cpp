@@ -1,4 +1,5 @@
 //forward list : 싱글드 list, 0(1) for 삽입/삭제 , 벡터와는 다르게 0(1)의 랜덤엑세스는 불가
+//스택에 first pointer로 구성됨
 //벡터가 더 좋다. 
 
 //emplace_front는 있지만
