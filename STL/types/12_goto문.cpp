@@ -30,9 +30,6 @@ int main(){
                 goto afterLoop;
             }
         }
-        if(exit == true){
-            break;
-        }
     }
     afterLoop:
     std::cout<<"after loop"<<std::endl;
