@@ -1,16 +1,8 @@
-//
-//  main.cpp
-//  float
-//
-//  Created by 김현배 on 2022/02/23.
-//
-
-
-
 //float에서는 == 나 >= 등 하지말자
 //부동소수점의 한계 해결방법
 //f1+f2일때 두개의 스케일값이 너무 차이가 나면 결과값이 이상하게 나옴
 //double이 float보다 훨씬 정밀하게 숫자 표현해준다.
+
 #include <iostream>
 #include <numeric>
 //어느정도 맞으면 ==을 출력해주는 함수
