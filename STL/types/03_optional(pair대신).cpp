@@ -1,12 +1,3 @@
-//
-//  main.cpp
-//  optional
-//
-//  Created by 김현배 on 2022/02/27.
-//
-
-
-
 //pair사용보다 더 효율적이다. 코드 가독성이 좋다.
 #include <iostream>
 #include <optional>
