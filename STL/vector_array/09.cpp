@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  9
-//
-//  Created by 김현배 on 2022/02/20.
-//
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -13,7 +6,7 @@ int main(int argc, const char * argv[]) {
     nums.erase(std::remove_if(nums.begin(),nums.end(),[](int n){
     //std::remove if란
     //begin부터 end까지 모든 짝수 엘레멘트 삭제 그리고 마지막 엘레멘트 리턴
-    //여전히 사이즈는 7
+    //그러나 여전히 사이즈는 7
     
     //erase란    
     //리턴받은 마지막 엘레멘트부터 end까지 사이즈 삭제
