@@ -1,15 +1,5 @@
-//
-//  main.cpp
-//  priority_queue
-//
-//  Created by 김현배 on 2022/02/22.
-//
-
-
-
-//queue : first in first out
 //priority queue : pop이 되는 엘레멘트에 우선순위가 있음
-//MAX값이 무조건 top으로 가는 트리구조
+//MAX값이 무조건 top으로 가는 "트리구조"!!!!!!!!!!!!!!
 //삽입되면 가장 오른쪽 끝에 삽입되고 트리구조의 룰을 지키기위해
 //부모자식간 스왑과정을 거치게된다.
 //insertion/pop : 0(logN) -> tree구조를 갖는다.
