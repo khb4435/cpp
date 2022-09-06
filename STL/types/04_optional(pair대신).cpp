@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  optional2
-//
-//  Created by 김현배 on 2022/02/27.
-//
-
 #include <iostream>
 #include <optional>
 class Cat{
