@@ -8,6 +8,9 @@
 //이유는 lock_guard가 좀 더 가볍기도하고, 더 제한적인 기능만을 다루기때문에
 //쓰기 간단하다.
 
+//결과적으로 unique_lock을 다른 함수로 보낼 수 있음
+//개발자가 unique_lock을 resource로 관리할 수 있게 해준다.
+
 struct MInt{ //struct, class 비슷
     std::mutex mtx;
     int num = 0;
