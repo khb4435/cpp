@@ -18,17 +18,20 @@ bool isNeg(float x){
     //이 방식은 되는거 있고 안되는 컴파일러 있고 그럼
     //unsigned char*, char* , std::bite* 만 모든 컴파일러에서 적용됨
     
+    //1
     //float로 비교하는게 느리니까 unsigned int로 받아서 비교
     //float의 첫비트 부호비트 비교
     //unsigned int* ui = (unsigned int*)&x;
     //return *ui & 0x80000000;
     
+    //2
     //쓸데없는 메모리 카피 일어난거아냐? ㄴㄴ
     //컴파일러는 똑똑해서 타입퍼닝 취급한다.
     unsigned int tmp;
     std::memcpy(&tmp, &x, sizeof(x));
     return tmp&0x80000000;
     
+    //3
     //c++20
     //return std::bit_cast<uint32_t>(x) & 0x80000000;
 }
