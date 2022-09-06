@@ -1,12 +1,6 @@
-//
-//  main.cpp
-//  8
-//
-//  Created by 김현배 on 2022/02/20.
-//
-
 //결론적으로는 remove보다 remove if쓰는게 낫다.
-//remove는 코드 하나씨 확인하면서 지우고 나머지 뒤 원소를 다 앞칸씩 무브시키는 방법으로한다. 
+//remove는 코드 하나씩 확인하면서 지우고 나머지 뒤 원소를 다 앞칸씩 "무브"시키는 방법으로한다.
+//많은 시간 소요됨.
 #include <iostream>
 #include <vector>
 #include <algorithm>
