@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  dynamicMatrix
-//
-//  Created by 김현배 on 2022/02/20.
-//
-
 #include <iostream>
 #include <array>
 #include <vector>
@@ -32,7 +25,7 @@ class Matrix{
             mRow = row;
             mCol = col;
         }
-        T& operator()(int rowIdx,int colIdx){
+        T& operator()(int rowIdx,int colIdx){ //int
                 const int idx = rowIdx + mCol * colIdx;
                 return mMatrix[idx]
         }
@@ -75,7 +68,8 @@ int main(){
 #include <vector>
 int main(){
     std::array<std::array<int,10>,10>mat;
-    //1
+    
+    //1 -> 옳은방법
     for(int rowIdx=0;rowIdx<10;rowIdx++){
         for(int colIdx=0;colIdx<10;colIdx++){
             mat[rowIdx][colIdx]+=1;
