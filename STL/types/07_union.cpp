@@ -1,12 +1,3 @@
-//
-//  main.cpp
-//  union
-//
-//  Created by 김현배 on 2022/02/27.
-//
-
-
-
 //union을 사용하는 이유? 메모리 세이빙
 #include <iostream>
 struct S{ //4 + (4) + 8 = 16
