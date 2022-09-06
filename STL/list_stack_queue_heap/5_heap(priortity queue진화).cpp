@@ -16,7 +16,7 @@ int main()
     print("Max heap");
  
     std::vector<int> v {1,3,5,7,9,11};
-    print("initially, v", v);
+    print("initially, v", v);//1,3,5,7,9,11
     for(auto& i : v){
         std::cout<<i<<" "; //1,3,5,7,9,11 벡터
     }std::cout<<std::endl;
@@ -24,7 +24,7 @@ int main()
     //벡터를 힙으로 바꾼다. 0(N)
     //prioriory queue구조
     std::make_heap(v.begin(), v.end());
-    print("after make_heap, v", v);
+    print("after make_heap, v", v); //11,9,5,7,3,1 
     for(auto& i : v){
         std::cout<<i<<" "; //11,9,5,7,3,1 
     }std::cout<<std::endl;
@@ -34,7 +34,7 @@ int main()
     //prioiry queue와 같이 max와 가장 오른쪼 끝으 원소와 swap되고
     //tree구조의 룰로 부모-자식간 룰에 맞게 swap됨
     std::pop_heap(v.begin(), v.end());
-    print("after pop_heap, v", v);
+    print("after pop_heap, v", v);//9,7,5,1,3,11
     for(auto& i : v){
         std::cout<<i<<" "; //9,7,5,1,3,11 pop heap
     }std::cout<<std::endl;
