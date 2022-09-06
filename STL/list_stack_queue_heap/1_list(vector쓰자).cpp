@@ -1,16 +1,8 @@
-//
-//  main.cpp
-//  1
-//
-//  Created by 김현배 on 2022/02/22.
-//
-
-
-
+//더블링크드list
 //일단 실무에서 거의 쓰이지 않음 -> vector가 더 좋음
 //find 0(N) : 처음부터 뒤져가니까
 //삽입/삭제 0(1) 공간하나 만들고 포인터만 옮겨주면됌
-//더블링크드list
+
 
 #include <iostream>
 #include <list>
