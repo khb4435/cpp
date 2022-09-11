@@ -1,12 +1,3 @@
-//
-//  main.cpp
-//  function_templete
-//
-//  Created by 김현배 on 2022/02/22.
-//
-
-
-
 #include <iostream>
 
 //호출이 되기 전까지는 코드로만 존재하고 있다가 컴파일 할 때 함수가 호출이 되고 있으면 그 타입에 맞춰서 컴파일된다.
