@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  template_concept
-//
-//  Created by 김현배 on 2022/02/22.
-//
-
-
 //템플릿 안전하게 쓰기! 템플릿 콘셉!
 #include <concepts>
 #include <iostream>
