@@ -1,17 +1,12 @@
-//
-//  main.cpp
-//  templete_instantiation
-//
-//  Created by 김현배 on 2022/02/22.
-//
 
-
+//템플릿은 코드상으로만 존재하다가 컴파일이 되면서 만들어지는데 오류를 방지하기 위해 템플릿을 헤더파일에 넣을때
+//보통 헤더파일엔 선언만 넣고 cpp에 몸체를 넣는다 
+//그러나 템플릿은 헤더파일에 그냥 몸체를 다 넣어줘야한다.
 
 #include <vector>
 #include <iostream>
 //""multiple type parameters"" -> typename이 여러개 될 수 있음
-//예)std::find
-template<typename IT,typename T>
+template<typename IT,typename T> //std::find
 IT find(IT first, IT last, const T& value){
     while(first!=last){
         if(*first==value){
@@ -34,11 +29,6 @@ template<typename ...T>
 void foo(T && ... args){
     (std::cout<< ... <<args) << '\n';
 }
-
-//템플릿은 코드상으로만 존재하다가 컴파일이 되면서 만들어지는데 오류를 방지하기 위해 템플릿을 헤더파일에 넣을때
-//보통 헤더파일엔 선언만 넣고 cpp에 몸체를 넣는다 
-//그러나 템플릿은 헤더파일에 그냥 몸체를 다 넣어줘야한다.
-
 
 int main(int argc, const char * argv[]) {
     //non type parameter
