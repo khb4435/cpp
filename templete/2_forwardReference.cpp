@@ -11,7 +11,7 @@ void printVar(T &&a){ //forward reference (universal reference)
     //꼬이게되는건 그림으로확인
     
     
-    std::string localVar(std::forward(a)); //이게 더 맞음
+    std::string localVar(std::forward(a)); 
     //std::forward를 쓰면 Lvalue로 넘어오면 copy시키고
     //Rvalue로 넘어오면 move시킨다
     
