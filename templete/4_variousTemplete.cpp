@@ -1,13 +1,3 @@
-//
-//  main.cpp
-//  various_template
-//
-//  Created by 김현배 on 2022/02/22.
-//
-
-
-
-
 #include <iostream>
 #include <vector>
 
