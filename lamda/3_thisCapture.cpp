@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  3
-//
-//  Created by 김현배 on 2022/02/20.
-//
-
 //일단 this는 클래스와 관련이 있음
 
 #include <iostream>
